@@ -36,7 +36,7 @@ export default function NavegacionAdministrador() {
           console.log(err);
         });
     };
-  
+
     useEffect(() => {
         traerDatos()
         setReload(false);

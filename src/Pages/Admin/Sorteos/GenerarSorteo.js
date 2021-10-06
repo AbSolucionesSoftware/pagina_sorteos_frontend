@@ -69,9 +69,11 @@ export default function GenerarSorteo() {
     const handleDrawerOpen = () => {
       setOpen(!open);
     }
-
+    console.log(sorteoFinal);
+    console.log(dataImagen);
     const enviarDatos = async () => {
       setLoading(true);
+      console.log(sorteoFinal);
       const formData = new FormData();
       formData.append("nombre_sorteo", sorteoFinal.nombre_sorteo);
       formData.append("fecha_sorteo", sorteoFinal.fecha_sorteo);
@@ -81,10 +83,19 @@ export default function GenerarSorteo() {
         formData.append("imagen", dataImagen.imagen);
       }
       console.log(formData);
+      // const input ={
+      //   "nombre_sorteo": sorteoFinal.nombre_sorteo,
+      //   "fecha_sorteo": sorteoFinal.fecha_sorteo,
+      //   "lista_premios": sorteoFinal.lista_premios,
+      //   "boletos": sorteoFinal.boletos ,
+      //   "imagen": dataImagen.imagen
+      // }
+      // console.log(input);
       await clienteAxios
       .post(`/sorteo/crearSorteo/`, formData, 
         {
           headers: {
+            'Content-Type': 'multipart/form-data',
             Authorization: `bearer ${token}`
           }
         })

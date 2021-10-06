@@ -66,7 +66,6 @@ export default function RegistroBanner() {
 	);
     const subirImagen = async () => {
             setLoading(true);
-		// if (control === false) {
 			if (!dataImagen.imagen || !preview) {
 				return;
 			} else if (preview && preview.includes('https://prueba-tienda.s3.us-west-1.amazonaws.com')) {
@@ -91,29 +90,6 @@ export default function RegistroBanner() {
                     setLoading(false);
                     setAlert({ message: 'Ocurrio un problema en el servidor!', status: 'error', open: true });
 				});
-		// }else{
-			// if (!datos.imagen || !preview) {
-			// 	return;
-			// } else if (preview && preview.includes('https')) {
-			// 	return;
-			// }
-			// const formData = new FormData();
-			// formData.append("imagen", datos.imagen);
-			// await clienteAxios
-			// 	.put(`/banner/${editarBanner._id}`, formData, {
-			// 		headers: {
-			// 			'Content-Type': 'multipart/form-data',
-			// 			Authorization: `bearer ${token}`
-			// 		}
-			// 	})
-			// 	.then((res) => {
-					
-			// 	})
-			// 	.catch((err) => {
-					
-			// 	});
-		// }
-		
 	};
 
     return (
