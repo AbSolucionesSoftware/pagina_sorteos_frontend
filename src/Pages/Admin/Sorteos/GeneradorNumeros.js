@@ -118,11 +118,10 @@ export default function GeneradorNumeros({sorteoFinal, setSorteoFinal}) {
                     </div>
                 </Box>
                 <Grid container lg={12}>
-                    {/* {
-                        boletos.map((element) => {
+                    {
+                        sorteoFinal?.boletos?.map((element) => {
                             return(
                                 <Box p={1}>
-                                {console.log(element.numero_boleto)}
                                     <Paper elevantion={3}>
                                         <Box p={1}>
                                             <b>{element.numero_boleto}</b>
@@ -131,7 +130,7 @@ export default function GeneradorNumeros({sorteoFinal, setSorteoFinal}) {
                                 </Box>
                             )
                         })
-                    } */}
+                    }
                 </Grid>
             </Paper>
         </div>

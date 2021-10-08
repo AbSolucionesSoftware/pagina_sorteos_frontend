@@ -7,6 +7,7 @@ export default function RelojSorteo() {
 
     const { datosSorteo } = React.useContext(PaginaContext);
     const [reloj, setReloj] = useState('');
+    if(!datosSorteo) {return null}
 
     var final = moment(datosSorteo.fecha_sorteo);
 

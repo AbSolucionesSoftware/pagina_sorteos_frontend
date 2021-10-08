@@ -35,7 +35,7 @@ export default function BannerAdmin() {
     const [loading, setLoading] = useState(false);
     const [ openModal, setOpenModal ] = useState(false);
     const [banners, setBanners] = useState([]);
-    const handleModal = () => setOpenModal(!openModal);
+    const handleModal = () => (setOpenModal(!openModal));
     const [ idBanner, setIdBanner] = useState('');
 
     const traerDatos = async () => {

@@ -100,6 +100,19 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
                     </Box>
                     <Box width="100%" p={1}>
                         <Typography>
+                            Precio de Boleto:
+                        </Typography>
+                        <TextField
+                            fullWidth
+                            size="small"
+                            name="precio_boleto"
+                            value={sorteoFinal.precio_boleto ? sorteoFinal.precio_boleto : ""}
+                            variant="outlined"
+                            onChange={obtenerCamposSorteo}
+                        />  
+                    </Box>
+                    <Box width="100%" p={1}>
+                        <Typography>
                             Fecha de Sorteo:
                         </Typography>
                         <TextField
@@ -146,8 +159,9 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
                         </Button>
                     </Box>
                 </div>
+                
                 {
-                    listaPremios?.map((premio, index) => {
+                    sorteoFinal?.lista_premios?.map((premio, index) => {
                         return(
                             <div className={classes.formInputFlex}>
                                 <Box width="85%" p={1} key={index}>
@@ -204,6 +218,22 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
                                 Arrastra y suelta tu imagen aquí, o selecciona una imagen haciendo click aquí
                             </Typography>
                         )}
+                    </Box>
+                    <Box
+                        width='50%'
+                        display="flex"
+                        justifyContent="center"
+                        alignItems="center"
+                        textAlign="center"
+                    >
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick=""
+
+                        >
+                            Subir imagen
+                        </Button>
                     </Box>
                 </div>
             </Box>

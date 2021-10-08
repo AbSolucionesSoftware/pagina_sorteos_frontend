@@ -49,8 +49,9 @@ export default function LayoutAdministrador(props) {
     const classes = useStyles();
     const {routes } = props;
     const user = JSON.parse(localStorage.getItem('user'));
-    console.log(!user ? "no hay sesion" : "si hay sesion")
-
+    
+    if(!user){return null};
+    
     return (
         <React.Fragment>
         <AdminProvider>

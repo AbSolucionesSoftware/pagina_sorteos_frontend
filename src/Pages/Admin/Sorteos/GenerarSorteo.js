@@ -68,41 +68,27 @@ export default function GenerarSorteo() {
 
     const handleDrawerOpen = () => {
       setOpen(!open);
-    }
+    };
+
     console.log(sorteoFinal);
-    console.log(dataImagen);
+
     const enviarDatos = async () => {
       setLoading(true);
-      console.log(sorteoFinal);
-      const formData = new FormData();
-      formData.append("nombre_sorteo", sorteoFinal.nombre_sorteo);
-      formData.append("fecha_sorteo", sorteoFinal.fecha_sorteo);
-      formData.append("lista_premios", sorteoFinal.lista_premios);
-      formData.append("boletos", sorteoFinal.boletos);
-      if (dataImagen.imagen) {
-        formData.append("imagen", dataImagen.imagen);
+      const input ={
+        "nombre_sorteo": sorteoFinal.nombre_sorteo,
+        "fecha_sorteo": sorteoFinal.fecha_sorteo,
+        "lista_premios": sorteoFinal.lista_premios,
+        "boletos": sorteoFinal.boletos,
+        "precio_boleto":sorteoFinal.precio_boleto,
       }
-      console.log(formData);
-      // const input ={
-      //   "nombre_sorteo": sorteoFinal.nombre_sorteo,
-      //   "fecha_sorteo": sorteoFinal.fecha_sorteo,
-      //   "lista_premios": sorteoFinal.lista_premios,
-      //   "boletos": sorteoFinal.boletos ,
-      //   "imagen": dataImagen.imagen
-      // }
-      // console.log(input);
+      console.log(input);
       await clienteAxios
-      .post(`/sorteo/crearSorteo/`, formData, 
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `bearer ${token}`
-          }
-        })
+      .post(`/sorteo/crearSorteo/`,input)
       .then((res) => {
         setLoading(false);
+        console.log(input);
         console.log(res);
-        setAlert({ message: 'Informacion editada con exito!', status: 'success', open: true });
+        setAlert({ message: 'Sorteo creado con exito!', status: 'success', open: true });
       })
       .catch((err) => {
         setLoading(false);

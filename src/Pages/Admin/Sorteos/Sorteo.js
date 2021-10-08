@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Grid, Paper, TextField, Typography } from '@material-ui/core';
+import { Button, Container, FormControlLabel, Grid, Paper, Switch, TextField, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import GenerarSorteo from './GenerarSorteo';
+import BoletosSorteo from './BoletosSorteo';
 import clienteAxios from '../../../Config/axios';
 import { makeStyles } from '@material-ui/styles';
 
@@ -33,7 +34,7 @@ export default function SorteoAdministrador() {
         await clienteAxios
         .get(`/sorteo/getSorteoActivo`)
         .then((res) => {
-            setSorteo(res.data.sorteo)
+            setSorteo(res.data.sorteo);
         })
         .catch((err) => {
           console.log(err);
@@ -48,6 +49,9 @@ export default function SorteoAdministrador() {
 
     }
 
+    const activarSorteos =()=>{
+
+    }
 
     return (
         <Container>
@@ -58,15 +62,39 @@ export default function SorteoAdministrador() {
                             Sorteo en turno
                         </Typography>
                     </Box>
-                    <Box>
+                    {sorteo ? 
+                        <Box display="flex" justifyContent="flex-end" p={1}>
+                            <BoletosSorteo />
+                        </Box>
+                        : null
+                    }
+                    {sorteo ? 
+                        <Box display="flex" justifyContent="flex-end" p={1}>
+                            <FormControlLabel
+                                control={
+                                <Switch
+                                    // checked={state.checkedB}
+                                    onChange={activarSorteos}
+                                    name="checkedB"
+                                    color="primary"
+                                />
+                                }
+                                label="Activar Sorteo"
+                            />
+                        </Box>
+                        : null
+                    }
+                    {!sorteo ? 
                         <GenerarSorteo />
-                    </Box>
+                    : null
+                    }
                 </Box>
             </Grid>
             <Grid container>
                 <Grid item lg={12}>
                     <Box p={2}>
-                        <Paper elevation={3} width="100%" >
+                        <Paper elevation={3} width="100%">
+                           
                             <Box p={1}>
                                 <div className={classes.formInputFlex}>
                                     <Box width="100%" p={1}>
@@ -125,14 +153,13 @@ export default function SorteoAdministrador() {
                                     </Box>
                                     <Box width="100%" p={1}>
                                         <Typography>
-                                            <b>Fecha Sorteo: </b>
+                                            <b>Precio de boleto: </b>
                                         </Typography>
                                         <TextField
                                             fullWidth
                                             size="small"
-                                            name="fecha_sorteo"
-                                            value={ sorteo ? sorteo.fecha_sorteo : "" }
-                                            type="date"
+                                            name="precio_boleto"
+                                            value={ sorteo ? sorteo.precio_boleto : "" }
                                             id="form-producto-clave-alterna"
                                             variant="outlined"
                                             onChange={obtenerCampos}

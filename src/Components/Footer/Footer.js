@@ -19,8 +19,9 @@ const useStyles = makeStyles({
 
 export default function Footer() {
     const { datos } = React.useContext(PaginaContext);
-
-    const classes = useStyles();
+    const classes = useStyles();    
+    
+    if (!datos) {return null}
 
     return (
         <Grid style={{background: 'black', color: 'white'}}>
