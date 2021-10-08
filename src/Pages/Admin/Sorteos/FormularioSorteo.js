@@ -100,6 +100,19 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
                     </Box>
                     <Box width="100%" p={1}>
                         <Typography>
+                            Precio del boleto:
+                        </Typography>
+                        <TextField
+                            fullWidth
+                            size="small"
+                            name="precio_boleto"
+                            value={sorteoFinal.precio_boleto ? sorteoFinal.precio_boleto : ""}
+                            variant="outlined"
+                            onChange={obtenerCamposSorteo}
+                        />  
+                    </Box>
+                    <Box width="100%" p={1}>
+                        <Typography>
                             Fecha de Sorteo:
                         </Typography>
                         <TextField

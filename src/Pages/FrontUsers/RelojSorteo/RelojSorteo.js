@@ -6,7 +6,7 @@ import moment from 'moment';
 export default function RelojSorteo() {
 
     const { datosSorteo } = React.useContext(PaginaContext);
-    const [reloj, setReloj] = useState('');
+    const [ reloj, setReloj ] = useState('');
 
     var final = moment(datosSorteo.fecha_sorteo);
 
@@ -14,16 +14,16 @@ export default function RelojSorteo() {
         var inicio = moment();
         var duracion = final.diff(inicio);
         var intervalo = moment(duracion);
-        // var mes = intervalo.month()+1;
-        // var diaDelMes = intervalo.date();
-        // var hora = intervalo.hour();
-        // var minuto = intervalo.minute();
-        // var segundo = intervalo.second();
-        var resultado = (intervalo.format("MM/DD HH:mm:ss"));
-        setReloj(resultado);
+        var mes = intervalo.month()+1;
+        var diaDelMes = intervalo.date();
+        var hora = intervalo.hour();
+        var minuto = intervalo.minute();
+        var segundo = intervalo.second();
+        // var resultado = (intervalo.format("MM/DD HH:mm:ss"));
+        // setReloj(resultado);
         // setReloj(mes + " Meses " + diaDelMes + " Dias " + hora + " Horas " + minuto + " Minutos " + segundo);
     };
-    
+
     setInterval(relojDeInicio, 1000);
 
     return (
