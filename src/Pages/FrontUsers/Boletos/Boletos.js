@@ -57,7 +57,7 @@ export default function Boletos() {
                     </Typography>
                 </Box>
                 {
-                    sorteo?.lista_premios.map((premio, index) => {
+                    sorteo?.lista_premios?.map((premio, index) => {
                         return(
                             <Box textAlign="center" p={1}>
                                 <Typography variant='h6'>
@@ -104,14 +104,20 @@ export default function Boletos() {
                 </Box>
                 <Grid item lg={12}>
                     <Box display='flex'>
-                        <Box p={1}>
-                            <Chip
-                                style={{background: 'white'}}
-                                component={Link}
-                                to={`/sorteos/comprar-boleto/2525/i5s5s5s5s`}
-                                label={<Box p={1}><Typography variant='h5'><b>0525</b></Typography></Box>}
-                            />
-                        </Box>
+                        {
+                            sorteo?.boletos?.map((boleto) => {
+                                return(
+                                    <Box p={1}>
+                                        <Chip
+                                            style={{background: 'white'}}
+                                            component={Link}
+                                            to={`/sorteos/comprar-boleto/${boleto.numero_boleto}/${boleto._id}`}
+                                            label={<Box p={1}><Typography variant='h5'><b>{boleto.numero_boleto}</b></Typography></Box>}
+                                        />
+                                    </Box>
+                                );
+                            })
+                        }
                     </Box>
                 </Grid>
             </Grid>
