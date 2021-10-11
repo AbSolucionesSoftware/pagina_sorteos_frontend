@@ -1,4 +1,4 @@
-import { Button, Chip, Grid, Paper, TextField, Typography } from '@material-ui/core';
+import { Button,  Grid, Paper, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Box } from '@material-ui/system';
 import React, { useState } from 'react';
@@ -36,11 +36,12 @@ export default function GeneradorNumeros({sorteoFinal, setSorteoFinal}) {
             const resultado = num.padStart(cifrasBoletos.cantidad_cifras, "0");
             let arrayBoleto =  {
                     numero_boleto: resultado,
-                    propietario: '',
+                    nombres: '',
                     telefono: '',
-                    domicilio: '',
-                    ciudad: '',
-                    fecha_pago: ''
+                    apellidos: '',
+                    estado: '',
+                    fecha_pago: '',
+                    vendido: false,
             };
             boletos.push(arrayBoleto);
         };

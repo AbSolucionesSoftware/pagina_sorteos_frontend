@@ -13,6 +13,7 @@ import BannerAdmin from "../Pages/Admin/Publicidad/BannerAdmin";
 import InoformacionEmpresa from "../Pages/Admin/Informacion/InoformacionEmpresa";
 import PreguntasFrecuentes from "../Pages/Admin/PreguntasFrecuentes/PreguntasFrecuentes";
 import VideosPromocionales from "../Pages/Admin/ListaVideos.js/VideosPromocionales";
+import SorteosEliminados from '../Pages/Admin/Sorteos/SorteosEliminados/SorteosEliminados'
 
 const routes = [
 	{
@@ -43,6 +44,11 @@ const routes = [
 			{
 				path: '/admin/videos-promocionales',
 				component: VideosPromocionales,
+				exact: true,
+			},
+			{
+				path: '/admin/sorteos-eliminados',
+				component: SorteosEliminados,
 				exact: true,
 			}
 		]
@@ -78,7 +84,7 @@ const routes = [
 				exact: true,
 			},
 			{
-				path: '/sorteos/comprar-boleto/:numero/:id',
+				path: '/sorteos/comprar-boleto/:numero/:idBoleto',
 				component: ComprarBoleto,
 				exact: true,
 			}

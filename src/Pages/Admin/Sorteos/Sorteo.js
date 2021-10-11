@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Container, FormControlLabel, Grid, Paper, Switch, TextField, Typography } from '@material-ui/core';
+import React, { useContext, useEffect, useState } from 'react';
+import { Button, CircularProgress, Container, FormControlLabel, Grid, Paper, Switch, TextField, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import GenerarSorteo from './GenerarSorteo';
 import BoletosSorteo from './BoletosSorteo';
 import clienteAxios from '../../../Config/axios';
 import { makeStyles } from '@material-ui/styles';
+import EliminarSorteo from './EliminarSorteo';
+import SnackBarMessages from '../../../Components/SnackBarMessages';
+import { AdminContext } from '../../../Context/AdminContext';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -25,36 +28,44 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SorteoAdministrador() {
+	const { alert, setAlert } = useContext(AdminContext);
 
     const classes = useStyles();
 
+    const [loading, setLoading] = useState(false);
     const [sorteo, setSorteo] = useState([]);
 
     const traerSorteoActivo = async () => {
         await clienteAxios
-        .get(`/sorteo/getSorteoActivo`)
-        .then((res) => {
-            setSorteo(res.data.sorteo);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+            .get(`/sorteo/getSorteoActivo`)
+            .then((res) => {
+                setLoading(false);
+                setSorteo(res.data.sorteo);
+            })
+            .catch((err) => {
+                setLoading(false);
+                console.log(err);
+            });
     };
 
     useEffect(() => {
         traerSorteoActivo();
-    }, []);
+    }, [loading]);
 
     const obtenerCampos =()=>{
 
     }
 
-    const activarSorteos =()=>{
-
-    }
-
+    if (loading)
+	return (
+		<Box display="flex" justifyContent="center" alignItems="center" height="30vh">
+			<CircularProgress />
+		</Box>
+	);
+console.log(sorteo)
     return (
         <Container>
+            <SnackBarMessages alert={alert} setAlert={setAlert} />
             <Grid item lg={10}>
                 <Box display='flex'>
                     <Box sx={{ flexGrow: 1 }}>
@@ -62,31 +73,10 @@ export default function SorteoAdministrador() {
                             Sorteo en turno
                         </Typography>
                     </Box>
-                    {sorteo ? 
-                        <Box display="flex" justifyContent="flex-end" p={1}>
-                            <BoletosSorteo />
+                    {sorteo ? null :
+                        <Box>
+                            <GenerarSorteo loading={loading} setLoading={setLoading} /> 
                         </Box>
-                        : null
-                    }
-                    {sorteo ? 
-                        <Box display="flex" justifyContent="flex-end" p={1}>
-                            <FormControlLabel
-                                control={
-                                <Switch
-                                    // checked={state.checkedB}
-                                    onChange={activarSorteos}
-                                    name="checkedB"
-                                    color="primary"
-                                />
-                                }
-                                label="Activar Sorteo"
-                            />
-                        </Box>
-                        : null
-                    }
-                    {!sorteo ? 
-                        <GenerarSorteo />
-                    : null
                     }
                 </Box>
             </Grid>
@@ -94,7 +84,30 @@ export default function SorteoAdministrador() {
                 <Grid item lg={12}>
                     <Box p={2}>
                         <Paper elevation={3} width="100%">
-                           
+                            <Box display="flex" justifyContent="flex-end">
+                                {!sorteo ? null :
+                                    <Box>
+                                        <EliminarSorteo sorteo={sorteo} loading={loading} setLoading={setLoading} /> 
+                                    </Box>
+                                }
+                                {!sorteo ? null :
+                                    <Box p={1}>
+                                        <Button
+                                            size='large'
+                                            variant="contained"
+                                            color="primary"
+                                        >
+                                            Editar Sorteo
+                                        </Button>
+                                    </Box>
+                                }
+                                {sorteo ? 
+                                    <Box display="flex" justifyContent="flex-end" p={1}>
+                                        <BoletosSorteo sorteo={sorteo} />
+                                    </Box>
+                                    : null
+                                }
+                            </Box>
                             <Box p={1}>
                                 <div className={classes.formInputFlex}>
                                     <Box width="100%" p={1}>

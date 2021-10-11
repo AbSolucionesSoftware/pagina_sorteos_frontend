@@ -34,8 +34,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function RegistroBanner() {
-	const { setAlert } = useContext(AdminContext);
-
+	const { setAlert, setReload } = useContext(AdminContext);
     const classes = useStyles();
     const [ preview, setPreview ] = useState('');
     const [ dataImagen, setDataImagen ] = useState('');
@@ -82,11 +81,14 @@ export default function RegistroBanner() {
 					}
 				})
 				.then((res) => {
+                    setReload(true);
+                    handleDrawerOpen();
                     setLoading(false);
                     setAlert({ message: 'Banner agregado con exito!', status: 'success', open: true });
 				})
 				.catch((err) => {
-                    console.log(err);
+                    setReload(true);
+                    handleDrawerOpen();
                     setLoading(false);
                     setAlert({ message: 'Ocurrio un problema en el servidor!', status: 'error', open: true });
 				});

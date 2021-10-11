@@ -16,7 +16,7 @@ import clienteAxios from '../../Config/axios';
 import { AdminContext } from '../../Context/AdminContext';
 
 export default function NavegacionAdministrador() {
-    const { setDatos, reload, setReload } = React.useContext(AdminContext);
+    const { setDatos, reload, datos, setReload } = React.useContext(AdminContext);
     
     const classes = useStyles();
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -30,7 +30,8 @@ export default function NavegacionAdministrador() {
         await clienteAxios
         .get(`/empresa/empresaSorteo`)
         .then((res) => {
-            setDatos(res.data.empresa)
+            setDatos(res.data.empresa);
+            console.log(res.data.empresa)
         })
         .catch((err) => {
           console.log(err);
@@ -70,7 +71,7 @@ export default function NavegacionAdministrador() {
                         <Box className={classes.containerImageDrawer}>
                             <img 
                                 className={classes.image}
-                                src='https://i.pinimg.com/originals/45/11/b7/4511b76b8452f9afdaf45f6678facbbe.png' 
+                                src={datos.imgEmpresaUrl} 
                                 alt="imagen logo" 
                             />
                         </Box>
@@ -127,12 +128,12 @@ export default function NavegacionAdministrador() {
                             </ListItemButton>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemButton component={Link} to={`/admin/sorteos-boletos`}>
+                            <ListItemButton component={Link} to={`/admin/sorteos-eliminados`}>
                                 <ListItemIcon>
                                     <RestoreFromTrashIcon />
                                 </ListItemIcon>
                                 <Typography>
-                                Sorteos eliminados
+                                    Sorteos eliminados
                                 </Typography>
                             </ListItemButton>
                         </ListItem>
@@ -222,7 +223,7 @@ export default function NavegacionAdministrador() {
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton component={Link} to={`/admin/sorteos-boletos`}>
+                        <ListItemButton component={Link} to={`/admin/sorteos-eliminados`}>
                             <ListItemIcon>
                                 <RestoreFromTrashIcon />
                             </ListItemIcon>

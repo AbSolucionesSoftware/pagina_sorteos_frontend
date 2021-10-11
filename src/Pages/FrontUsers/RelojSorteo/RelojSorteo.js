@@ -7,6 +7,13 @@ export default function RelojSorteo() {
 
     const { datosSorteo } = React.useContext(PaginaContext);
     const [reloj, setReloj] = useState('');
+    const [ meses, setMeses ] = useState('');
+    const [ dias , setDias ] = useState('');
+    const [ horas , setHoras ] = useState('');
+    const [ minutos , setMinutos ] = useState('');
+    const [ segundos , setSegundos ] = useState('');
+
+
     if(!datosSorteo) {return null}
 
     var final = moment(datosSorteo.fecha_sorteo);
@@ -20,9 +27,16 @@ export default function RelojSorteo() {
         var hora = intervalo.hour();
         var minuto = intervalo.minute();
         var segundo = intervalo.second();
+        setMeses(mes);
+        setDias(diaDelMes);
+        setHoras(hora);
+        setMinutos(minuto);
+        setSegundos(segundo);
+
         // var resultado = (intervalo.format("MM/DD HH:mm:ss"));
         // setReloj(resultado);
-        // setReloj(mes + " Meses " + diaDelMes + " Dias " + hora + " Horas " + minuto + " Minutos " + segundo);
+        
+        setReloj(mes + " mes " + diaDelMes + " dia " + hora + " hrs. " + minuto + " min. " + segundo +" seg. ");
     };
 
     setInterval(relojDeInicio, 1000);
@@ -38,7 +52,7 @@ export default function RelojSorteo() {
                     </Box>
                     <Box mt={3} sx={{ display: { xs: 'block', sm: 'none' } }} textAlign='center'>
                         <Typography variant='h5'>
-                            <b>Tiempo restante para el sorteo</b> 
+                            <b>Tiempo restante para el proximo sorteo</b> 
                         </Typography>
                     </Box>
                     <Box mt={3} mb={2} sx={{ display: { xs: 'none', sm: 'block' } }} textAlign='center' >
@@ -54,7 +68,7 @@ export default function RelojSorteo() {
                     <Box p={1} textAlign='center'>
                         <Box p={1}>
                             <Typography variant="h5">
-                                <b>Aun estas a tiempo de adquirir tu boleto</b>
+                                <b>¡Aun estas a tiempo de adquirir tu boleto!</b>
                             </Typography>
                         </Box>
                         <Box p={1}>
@@ -69,9 +83,6 @@ export default function RelojSorteo() {
                         </Box>
                     </Box>
                 </Box>
-
-
-
             </Grid>
         </Fragment>
     )

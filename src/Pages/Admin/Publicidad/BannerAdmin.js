@@ -87,6 +87,7 @@ export default function BannerAdmin() {
 			<CircularProgress />
 		</Box>
 	);
+    
     return (
         <div>
             <SnackBarMessages alert={alert} setAlert={setAlert} />

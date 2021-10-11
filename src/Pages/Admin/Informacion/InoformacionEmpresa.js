@@ -69,6 +69,7 @@ export default function InoformacionEmpresa() {
 			...datos, [e.target.name]: e.target.value
         })
     };
+    console.log(datos);
 
     const enviarDatos = async () => {
         setLoading(true);
@@ -76,7 +77,6 @@ export default function InoformacionEmpresa() {
         formData.append("nombre_empresa", datos.nombre_empresa);
         formData.append("propietario", datos.propietario);
         formData.append("telefono", datos.telefono);
-        formData.append("quienes_somos", datos.quienes_somos);
         formData.append("calle_numero", datos.calle_numero);
         formData.append("cp", datos.cp);
         formData.append("colonia", datos.colonia);
@@ -100,15 +100,16 @@ export default function InoformacionEmpresa() {
         if (dataImagen.imagen) {
             formData.append("imagen", dataImagen.imagen);
         }
-
         await clienteAxios
 			.put(`/empresa/empresaSorteo/${datos._id}`, formData, 
             {
 				headers: {
-					Authorization: `bearer ${token}`
-				}
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `bearer ${token}`
+                }
 			})
 			.then((res) => {
+                console.log(res.data)
                 setLoading(false);
                 setAlert({ message: 'Informacion editada con exito!', status: 'success', open: true });
 			})

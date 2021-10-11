@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-export default function Boletos() {
+export default function Boletos({type}) {
     const classes = useStyles();
     const [sorteo, setSorteo] = useState([]);
 
@@ -36,17 +36,33 @@ export default function Boletos() {
         });
     };
 
+    // const buscarBoleto = async () => {
+    //     await clienteAxios
+    //     .post(`/sorteo/buscarBoleto`)
+    //     .then((res) => {
+    //         setSorteo(res.data.sorteo);
+    //         console.log(res.data.sorteo);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // };
+
     useEffect(() => {
         traerSorteoActivo();
     }, []);
 
+    if(!sorteo) return null
+
     return (
-        <Container>
-            <Grid>
+        <>
             <Box mt={2} textAlign='center'>  
                 <Box p={2}>
+                    <Typography variant="h6">
+                        Fecha del sorteo: <b>{sorteo ? sorteo.fecha_sorteo : null}</b>
+                    </Typography>
                     <Typography variant='h3'>
-                        <b>{ sorteo.nombre_sorteo }</b>
+                        <b>{ sorteo ?  sorteo.nombre_sorteo  : null}</b>
                     </Typography>
                 </Box>
             </Box>
@@ -60,8 +76,11 @@ export default function Boletos() {
                     sorteo?.lista_premios?.map((premio, index) => {
                         return(
                             <Box textAlign="center" p={1}>
-                                <Typography variant='h6'>
-                                    <b>{index+1}° Lugar {premio.premio} </b>
+                                <Typography variant='h5'>
+                                    <b>{index+1}° Lugar</b>
+                                </Typography>
+                                <Typography variant='h5'>
+                                    <b>{premio.premio} </b>
                                 </Typography>
                             </Box>
                         )
@@ -76,51 +95,52 @@ export default function Boletos() {
                     />
                 </Box>
             </Box>
-            </Grid>
-            
-            <Grid>
-                <Box textAlign="center" p="2">
-                    <Typography variant='h3'>
-                        <b>¡Boletos Disponibles!</b>
-                    </Typography>
-                </Box>
-                
-                <Box display='flex' justifyItems='center' alignContent='center' textAlign='center'> 
-                    <Box width="50%" p={1}>
-                        <Paper
-                            component="form"
-                            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 'auto' }}
-                        >
-                            <InputBase
-                                sx={{ ml: 1, flex: 1 }}
-                                placeholder="Busca tu boleto"
-                                inputProps={{ 'aria-label': 'busca tu boleto' }}
-                            />
-                            <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
-                                <SearchIcon />
-                            </IconButton>
-                        </Paper>
-                    </Box>
-                </Box>
-                <Grid item lg={12}>
-                    <Box display='flex'>
-                        {
-                            sorteo?.boletos?.map((boleto) => {
-                                return(
-                                    <Box p={1}>
-                                        <Chip
-                                            style={{background: 'white'}}
-                                            component={Link}
-                                            to={`/sorteos/comprar-boleto/${boleto.numero_boleto}/${boleto._id}`}
-                                            label={<Box p={1}><Typography variant='h5'><b>{boleto.numero_boleto}</b></Typography></Box>}
-                                        />
-                                    </Box>
-                                );
-                            })
-                        }
-                    </Box>
-                </Grid>
-            </Grid>
-        </Container>
+
+            {
+                type === 'FRENTE' ? null : (
+                    <>
+                        <Box textAlign="center" p="2">
+                            <Typography variant='h3'>
+                                <b>¡Boletos Disponibles!</b>
+                            </Typography>
+                        </Box>
+                        
+                        <Box display='flex' justifyItems='center' alignContent='center' textAlign='center'> 
+                            <Box width="50%" p={1}>
+                                <Paper
+                                    component="form"
+                                    sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 'auto' }}
+                                >
+                                    <InputBase
+                                        sx={{ ml: 1, flex: 1 }}
+                                        placeholder="Busca tu boleto"
+                                        inputProps={{ 'aria-label': 'busca tu boleto' }}
+                                    />
+                                    <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+                                        <SearchIcon />
+                                    </IconButton>
+                                </Paper>
+                            </Box>
+                        </Box>
+                        <Grid container lg={12}>
+                            {
+                                sorteo?.boletos?.map((boleto) => {
+                                    return(
+                                        <Box p={1}>
+                                            <Chip
+                                                style={{background: 'white'}}
+                                                component={Link}
+                                                to={`/sorteos/comprar-boleto/${boleto.numero_boleto}/${boleto._id}`}
+                                                label={<Box p={1}><Typography variant='h5'><b>{boleto.numero_boleto}</b></Typography></Box>}
+                                            />
+                                        </Box>
+                                    );
+                                })
+                            }
+                        </Grid>
+                    </>
+                )
+            }
+        </>
     )
 }

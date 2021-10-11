@@ -59,7 +59,7 @@ export default function VideosDeGanadores() {
                                                 <ReactPlayer 
                                                     url={video.link_video}
                                                     width="360px" 
-                                                    height="230px"
+                                                    height="220px"
                                                 />
                                             </Box>
                                         </Box>
@@ -72,7 +72,7 @@ export default function VideosDeGanadores() {
                         <ItemsCarousel
                             requestToChangeActive={setActiveItemIndex}
                             activeItemIndex={activeItemIndex}
-                            numberOfCards={3}
+                            numberOfCards={1}
                             gutter={40}
                             leftChevron={
                                 <IconButton aria-label="delete" disabled color="primary">
@@ -100,8 +100,8 @@ export default function VideosDeGanadores() {
                                             <Box>
                                                 <ReactPlayer 
                                                     url={video.link_video}
-                                                    width="360px" 
-                                                    height="230px"
+                                                    width="290px" 
+                                                    height="200px"
                                                 />
                                             </Box>
                                         </Box>

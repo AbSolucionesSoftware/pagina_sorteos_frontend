@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import { Grid, Paper,TextField, Button, Typography, Box } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { withRouter } from 'react-router';
+import clienteAxios from '../../../Config/axios';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     image: {
 		maxHeight: '100%',
 		maxWidth: '100%',
@@ -23,21 +24,39 @@ function FormularioDatos(props) {
 
     const boletoNumber = props.match.params.numero;
 
+    const idBoleto = props.match.params.idBoleto;
+
     const classes = useStyles();
+    const [datosBoleto, setDatosBoleto] = useState([]);
+
+    const obtenerDatos =(e)=>{
+        setDatosBoleto({...datosBoleto, [e.target.name]: e.target.value})
+    }
+
+    const GuardarDatos = async () => {
+        await clienteAxios
+        .put(`/sorteo/comprarBoletoSorteo/${idBoleto}`)
+        .then((res) => {
+            console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
 
     return (
         <>
            <Grid container justifyContent="center">
-                <Grid lg={4} xs={12}>
+                <Grid lg={4} md={6} xs={11}>
                     <Paper className={classes.root} elevation={3}>
                         <Box p={2} textAlign='center'>
                             <Typography variant='h5'>
-                                Por favor completa tus datos para cotinuar tu compra
+                                Por favor completa tus datos para continuar la compra de tu boleto
                             </Typography>
                         </Box>
                         <Box p={1} textAlign='center'>
                             <Typography variant='h4'>
-                                <b>Boleto: {boletoNumber} </b>
+                                <b>Boleto:  </b>
                             </Typography>
                         </Box>
                         <div className={classes.formInputFlex}>
@@ -86,21 +105,21 @@ function FormularioDatos(props) {
                                 <TextField
                                     fullWidth
                                     size="small"
-                                    name="celular"
+                                    name="telefono"
                                     id="form-producto-clave-alterna"
                                     variant="outlined"
                                 />
                             </Box>
                         </div>
-                        <Box p={3} textAlign='center'>
+                        <Box textAlign="center" >
                             <Button
-                                color='primary'
-                                size='large'
-                                variant='contained'
+                                color="primary"
+                                variant="contained"
                             >
-                                Iniciar Sesión
+                                Guardar
                             </Button>
                         </Box>
+
                     </Paper>
                 </Grid>
             </Grid>
