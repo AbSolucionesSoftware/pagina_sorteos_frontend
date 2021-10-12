@@ -56,12 +56,14 @@ export default function ComprarBoleto() {
     switch (step) {
       case 0:
         return (
-          <FormularioDatos />
+            <>
+            <FormularioDatos />
+          </>
         );
-        case 1:
-          return (
-            <RealizarCompra />
-          )
+        // case 1:
+        //   return (
+        //     <RealizarCompra />
+        //   )
     }
   }
 
