@@ -30,7 +30,7 @@ export default function Preguntas() {
                                     style={{background:'#1B1B1B', color:'white'}}
                                 >
                                     <AccordionSummary
-                                        expandIcon={<ExpandMoreIcon />}
+                                        expandIcon={<ExpandMoreIcon style={{color: 'white', fontSize: 40}} />}
                                         aria-controls="panel1bh-content"
                                         id="panel1bh-header"
                                     >

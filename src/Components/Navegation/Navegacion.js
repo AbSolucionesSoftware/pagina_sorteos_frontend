@@ -124,6 +124,15 @@ export default function Navegacion() {
                                 </ListItemText>
                             </ListItem>
                         </Grid>
+                        <Grid>
+                            <ListItem button component={Link} to={`/sorteos/login`}>
+                                <ListItemText>
+                                    <Typography variant='h6' >
+                                        <b>Sesion</b>
+                                    </Typography>
+                                </ListItemText>
+                            </ListItem>
+                        </Grid>
                     </Box>
                 </Grid>
             </Grid>
@@ -171,6 +180,16 @@ export default function Navegacion() {
                             </ListItemIcon>
                             <Typography>
                                 Comprar Boleto
+                            </Typography>
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemButton component={Link} to={`/sorteos/login`}>
+                            <ListItemIcon>
+                                <ConfirmationNumberIcon />
+                            </ListItemIcon>
+                            <Typography>
+                                Sesion
                             </Typography>
                         </ListItemButton>
                     </ListItem>

@@ -7,17 +7,20 @@ import clienteAxios from '../../../Config/axios';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
+    
+    containerImagen: {
+		height: 500,
+        width: 500
+	},
     image: {
-		maxHeight: '100%',
-		maxWidth: '100%',
+		minHeight: '100%',
+        minWidth: '100%',
         display: 'flex',
         justifyItems: 'center',
         alignContent: 'center',
         alignItems: 'center'
 	},
-    containerImagen: {
-		display: 'flex',
-	}
+   
 }));
 
 export default function Boletos({type}) {
@@ -87,10 +90,11 @@ export default function Boletos({type}) {
                     })
                 }
             </Box>
-            <Box mt={2} textAlign='center'>  
-                <Box p={2} >
+            <Box mt={2} textAlign='center' display="flex" justifyContent="center" justifyItems="center">  
+                <Box textAlign='center' style={{width: 900, height: '80%'}} >
                     <img 
-                        src={''}
+                        style={{width: '100%', height: '100%', display: "flex", justifyContent: "center"}}
+                        src={sorteo.imgSorteoBoletosUrl}
                         alt="Imagen de sorteo"
                     />
                 </Box>
