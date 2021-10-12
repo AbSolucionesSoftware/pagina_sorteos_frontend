@@ -10,6 +10,7 @@ export default function BannerPromocional() {
     
     const [videos, setVideos] = useState([]);
 
+    
     const traerDatos = async () => {
         await clienteAxios
         .get(`/bannerAdmin/banner-company`)
