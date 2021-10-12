@@ -32,19 +32,15 @@ export default function RelojSorteo() {
         setHoras(hora);
         setMinutos(minuto);
         setSegundos(segundo);
-
-        // var resultado = (intervalo.format("MM/DD HH:mm:ss"));
-        // setReloj(resultado);
         
-        setReloj(mes + " mes " + diaDelMes + " dia " + hora + " hrs. " + minuto + " min. " + segundo +" seg. ");
     };
 
     setInterval(relojDeInicio, 1000);
 
     return (
-        <Fragment>
+        <>
             <Grid lg={12}>
-                <Box p={5}>
+                <Box>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }} textAlign='center' >
                         <Typography variant='h3'>
                             <b>Tiempo restante para el sorteo</b> 
@@ -55,15 +51,133 @@ export default function RelojSorteo() {
                             <b>Tiempo restante para el proximo sorteo</b> 
                         </Typography>
                     </Box>
-                    <Box mt={3} mb={2} sx={{ display: { xs: 'none', sm: 'block' } }} textAlign='center' >
-                        <Typography variant='h1'>
-                            {reloj}
-                        </Typography>
+                    <Box sx={{ display: { xs: 'none', sm: 'block' } }} textAlign='center' >
+                        <Box display="flex" >
+                            {/* <Box display="flex" flexDirection="column" p={3} >
+                                <Box>
+                                    <Typography  variant='h1' >
+                                        <b>{meses}</b>
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="h6">
+                                        <b>meses</b>
+                                    </Typography>
+                                </Box>
+                            </Box> */}
+                            <Box display="flex" flexDirection="column" p={3} ml={3}>
+                                <Box>
+                                    <Typography  variant='h1' >
+                                        <b>{dias}</b>
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="h6">
+                                        <b>dias</b>
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            <Box display="flex" flexDirection="column" p={3} ml={3}>
+                                <Box>
+                                    <Typography  variant='h1' >
+                                        <b>{horas}</b>
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="h6">
+                                        <b>horas</b>
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            <Box display="flex" flexDirection="column" p={3} ml={3}>
+                                <Box>
+                                    <Typography  variant='h1' >
+                                        <b>{minutos}</b>
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="h6">
+                                        <b>minutos</b>
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            <Box display="flex" flexDirection="column" p={3} ml={3}>
+                                <Box>
+                                    <Typography  variant='h1' >
+                                        <b>{segundos}</b>
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography variant="h6">
+                                        <b>segundos</b>
+                                    </Typography>
+                                </Box>
+                            </Box>
+                        </Box>
                     </Box>
                     <Box mt={3} mb={2} sx={{ display: { xs: 'block', sm: 'none' } }} textAlign='center'>
-                        <Typography variant='h4'>
-                            {reloj}
-                        </Typography>
+                        <Box display="flex" >
+                            {/* <Box display="flex" flexDirection="column" p={1} >
+                                <Box>
+                                    <Typography>
+                                        <b>{meses}</b>
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography>
+                                        <b>meses</b>
+                                    </Typography>
+                                </Box>
+                            </Box> */}
+                            <Box display="flex" flexDirection="column" p={1}>
+                                <Box>
+                                    <Typography>
+                                        <b>{dias}</b>
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography>
+                                        <b>dias</b>
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            <Box display="flex" flexDirection="column" p={1}>
+                                <Box>
+                                    <Typography>
+                                        <b>{horas}</b>
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography>
+                                        <b>horas</b>
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            <Box display="flex" flexDirection="column" p={1}>
+                                <Box>
+                                    <Typography>
+                                        <b>{minutos}</b>
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography>
+                                        <b>minutos</b>
+                                    </Typography>
+                                </Box>
+                            </Box>
+                            <Box display="flex" flexDirection="column" p={1}>
+                                <Box>
+                                    <Typography>
+                                        <b>{segundos}</b>
+                                    </Typography>
+                                </Box>
+                                <Box>
+                                    <Typography>
+                                        <b>segundos</b>
+                                    </Typography>
+                                </Box>
+                            </Box>
+                        </Box>
                     </Box>
                     <Box p={1} textAlign='center'>
                         <Box p={1}>
@@ -84,6 +198,6 @@ export default function RelojSorteo() {
                     </Box>
                 </Box>
             </Grid>
-        </Fragment>
+        </>
     )
 }

@@ -14,6 +14,8 @@ import InoformacionEmpresa from "../Pages/Admin/Informacion/InoformacionEmpresa"
 import PreguntasFrecuentes from "../Pages/Admin/PreguntasFrecuentes/PreguntasFrecuentes";
 import VideosPromocionales from "../Pages/Admin/ListaVideos.js/VideosPromocionales";
 import SorteosEliminados from '../Pages/Admin/Sorteos/SorteosEliminados/SorteosEliminados'
+import Error404 from "../Pages/FrontUsers/Error";
+
 
 const routes = [
 	{
@@ -50,7 +52,11 @@ const routes = [
 				path: '/admin/sorteos-eliminados',
 				component: SorteosEliminados,
 				exact: true,
+			},
+			{
+				component: Error404
 			}
+			
 		]
 	},
 	{
@@ -87,6 +93,9 @@ const routes = [
 				path: '/sorteos/comprar-boleto/:numero/:idBoleto',
 				component: ComprarBoleto,
 				exact: true,
+			},
+			{
+				component: Error404
 			}
 		]
 	}

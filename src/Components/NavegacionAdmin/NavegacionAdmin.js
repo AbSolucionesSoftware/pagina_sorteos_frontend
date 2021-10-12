@@ -14,6 +14,7 @@ import useStyles from '../Navegation/Styles';
 import { Link } from 'react-router-dom';
 import clienteAxios from '../../Config/axios';
 import { AdminContext } from '../../Context/AdminContext';
+import Error404 from '../../Pages/FrontUsers/Error';
 
 export default function NavegacionAdministrador() {
     const { setDatos, reload, datos, setReload } = React.useContext(AdminContext);
@@ -31,7 +32,6 @@ export default function NavegacionAdministrador() {
         .get(`/empresa/empresaSorteo`)
         .then((res) => {
             setDatos(res.data.empresa);
-            console.log(res.data.empresa)
         })
         .catch((err) => {
           console.log(err);
@@ -43,6 +43,7 @@ export default function NavegacionAdministrador() {
         setReload(false);
     }, [reload]);
 
+    if(!datos){<Error404 />};
 
     return (
         <>

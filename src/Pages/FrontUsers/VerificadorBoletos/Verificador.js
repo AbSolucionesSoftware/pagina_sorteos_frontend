@@ -1,7 +1,8 @@
 import { Avatar, Box, Button, Grid, Paper, TextField, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles';
-import React from 'react';
+import React, { useState } from 'react';
 import { PaginaContext } from '../../../Context/PaginaContext';
+import clienteAxios from '../../../Config/axios';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -25,9 +26,25 @@ const useStyles = makeStyles((theme) => ({
 export default function Verificador() {
     const { datos } = React.useContext(PaginaContext);
     const classes = useStyles();
+    const [verBoleto, setVerBoleto] = useState([]);
+    const [numeroBoleto, setNumeroBoleto] = useState('');
+    console.log(numeroBoleto);
+    console.log(datos._id);
 
-    const obtenerCampos = () =>{
-        
+    const traerDatos = async () => {
+        await clienteAxios
+        .post(`/sorteo/buscarBoleto/${datos._id}`,{numeroBoleto: "0002"})
+        .then((res) => {
+            console.log(res)
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+
+    const obtenerCampos = (e) =>{
+        setNumeroBoleto({...numeroBoleto, [e.target.name]: e.target.value});
     };
 
     return (
@@ -62,7 +79,7 @@ export default function Verificador() {
                                     fullWidth
                                     type='number'
                                     size="small"
-                                    name="boletos"
+                                    name="numeroBoleto"
                                     id="form-producto-clave-alterna"
                                     variant="outlined"
                                     onChange={obtenerCampos}
@@ -74,6 +91,7 @@ export default function Verificador() {
                                 color='primary'
                                 size='large'
                                 variant='contained'
+                                // onClick={traerDatos}
                             >
                                 Verificar
                             </Button>

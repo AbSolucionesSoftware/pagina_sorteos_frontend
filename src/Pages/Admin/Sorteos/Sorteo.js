@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Button, CircularProgress, Container, FormControlLabel, Grid, Paper, Switch, TextField, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import GenerarSorteo from './GenerarSorteo';
@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/styles';
 import EliminarSorteo from './EliminarSorteo';
 import SnackBarMessages from '../../../Components/SnackBarMessages';
 import { AdminContext } from '../../../Context/AdminContext';
+import { useDropzone } from 'react-dropzone';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -24,7 +25,16 @@ const useStyles = makeStyles((theme) => ({
 	},
     formInputFlex: {
 		display: 'flex',
-	}
+	},
+    dropZone: {
+        width: 500,
+        height: 230,
+        display:"flex",
+        justifyContent: "center",
+        alignContent: "center",
+        border: 'dashed 2px',
+        borderColor: '#aaaaaa'
+    }
 }));
 
 export default function SorteoAdministrador() {
@@ -32,8 +42,10 @@ export default function SorteoAdministrador() {
 
     const classes = useStyles();
 
-    const [loading, setLoading] = useState(false);
-    const [sorteo, setSorteo] = useState([]);
+    const [ loading, setLoading ] = useState(false);
+    const [ sorteo, setSorteo ] = useState([]);
+    const [ preview, setPreview ] = useState('');
+    const [ dataImagen, setDataImagen ]= useState([]);
 
     const traerSorteoActivo = async () => {
         await clienteAxios
@@ -48,12 +60,30 @@ export default function SorteoAdministrador() {
             });
     };
 
+    const onDrop = useCallback(
+		(files) => {
+			setPreview(URL.createObjectURL(files[0]));
+			setDataImagen({
+				...dataImagen,
+				imagen: files[0]
+			});
+		},
+		[ dataImagen, setDataImagen, setPreview ]
+	);
+	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+    useEffect(() => {
+        if (sorteo) {
+            setPreview(sorteo.imgSorteoBoletosUrl);
+        }
+    }, []);
+
     useEffect(() => {
         traerSorteoActivo();
     }, [loading]);
 
-    const obtenerCampos =()=>{
-
+    const obtenerCampos = (e) => {
+        setSorteo({...sorteo, [e.target.name]: e.target.value})
     }
 
     if (loading)
@@ -62,7 +92,9 @@ export default function SorteoAdministrador() {
 			<CircularProgress />
 		</Box>
 	);
+
 console.log(sorteo)
+    
     return (
         <Container>
             <SnackBarMessages alert={alert} setAlert={setAlert} />
@@ -90,17 +122,7 @@ console.log(sorteo)
                                         <EliminarSorteo sorteo={sorteo} loading={loading} setLoading={setLoading} /> 
                                     </Box>
                                 }
-                                {!sorteo ? null :
-                                    <Box p={1}>
-                                        <Button
-                                            size='large'
-                                            variant="contained"
-                                            color="primary"
-                                        >
-                                            Editar Sorteo
-                                        </Button>
-                                    </Box>
-                                }
+                                
                                 {sorteo ? 
                                     <Box display="flex" justifyContent="flex-end" p={1}>
                                         <BoletosSorteo sorteo={sorteo} />
@@ -141,7 +163,7 @@ console.log(sorteo)
                                     </Box>
                                 </div>
                                 <div className={classes.formInputFlex}>
-                                    <Box width="100%" p={1}>
+                                    {/* <Box width="100%" p={1}>
                                         <Typography>
                                             <b>Lista de Premios: </b>
                                         </Typography>
@@ -163,7 +185,7 @@ console.log(sorteo)
                                                 </Box>
                                             )
                                         })}
-                                    </Box>
+                                    </Box> */}
                                     <Box width="100%" p={1}>
                                         <Typography>
                                             <b>Precio de boleto: </b>
@@ -178,7 +200,44 @@ console.log(sorteo)
                                             onChange={obtenerCampos}
                                         />
                                     </Box>
+                                    <Box
+                                        className={classes.dropZone}
+                                        {...getRootProps()}
+                                        height={250}
+                                        width="100%"
+                                        display="flex"
+                                        justifyContent="center"
+                                        alignItems="center"
+                                        textAlign="center"
+                                    >
+                                        <input {...getInputProps()} />
+                                        {dataImagen.imagen || preview ? (
+                                            <Box height={200} display="flex" justifyContent="center" alignItems="center">
+                                                <img alt="imagen del banner" src={preview} className={classes.imagen} />
+                                            </Box>
+                                        ) : isDragActive ? (
+                                            <Typography>Suelta tu imagen aquí...</Typography>
+                                        ) : (
+                                            <Typography>
+                                                Arrastra y suelta tu imagen aquí, o selecciona una imagen haciendo click aquí
+                                            </Typography>
+                                        )}
+                                    </Box>
                                 </div>
+
+                            </Box>
+                            <Box display="flex" justifyContent="flex-end">
+                                {!sorteo ? null :
+                                    <Box p={1}>
+                                        <Button
+                                            size='large'
+                                            variant="contained"
+                                            color="primary"
+                                        >
+                                            Editar Sorteo
+                                        </Button>
+                                    </Box>
+                                }
                             </Box>
                         </Paper>
                     </Box>

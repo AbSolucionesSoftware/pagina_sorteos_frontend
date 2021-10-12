@@ -67,31 +67,24 @@ export default function GenerarSorteo({loading, setLoading}) {
     };
 
     const handleDrawerOpen = () => {
-      setSorteoFinal([]);
+      // setSorteoFinal([]);
       setOpen(!open);
     };
 
     const enviarDatos = async () => {
       setRecargar(true);
-      const input ={
-        "nombre_sorteo": sorteoFinal.nombre_sorteo,
-        "fecha_sorteo": sorteoFinal.fecha_sorteo,
-        "lista_premios": sorteoFinal.lista_premios,
-        "boletos": sorteoFinal.boletos,
-        "precio_boleto":sorteoFinal.precio_boleto,
+      const formData = new FormData();
+      formData.append( "nombre_sorteo", sorteoFinal.nombre_sorteo);
+      formData.append( "fecha_sorteo", sorteoFinal.fecha_sorteo);
+      formData.append( "lista_premios", JSON.stringify(sorteoFinal.lista_premios));
+      formData.append( "boletos",  JSON.stringify(sorteoFinal.boletos));
+      formData.append( "precio_boleto", sorteoFinal.precio_boleto);
+      if (dataImagen.imagen) {
+        formData.append("imagen", dataImagen.imagen);
       }
 
-      const formData = new FormData();
-        formData.append( "nombre_sorteo", sorteoFinal.nombre_sorteo);
-        formData.append( "fecha_sorteo", sorteoFinal.fecha_sorteo);
-        formData.append( "lista_premios", sorteoFinal.lista_premios);
-        formData.append( "boletos", sorteoFinal.boletos);
-        formData.append( "precio_boleto", sorteoFinal.precio_boleto);
-        if (dataImagen.imagen) {
-          formData.append("imagen", dataImagen.imagen);
-      }
       await clienteAxios
-      .post(`/sorteo/crearSorteo`, formData, 
+      .post(`/sorteo/crearSorteo/`, formData, 
       {headers: 
         {
           'Content-Type': 'multipart/form-data',
@@ -99,20 +92,20 @@ export default function GenerarSorteo({loading, setLoading}) {
         }
       })
       .then((res) => {
-        console.log(res.data)
+        console.log(res.data);
         setLoading(true);
-        setRecargar(false);
-        // setSorteoFinal([]);
+        setRecargar(false); 
+        setSorteoFinal([]);
         setAlert({ message: 'Sorteo creado con exito!', status: 'success', open: true });
-        // handleDrawerOpen();
+        handleDrawerOpen();
       })
       .catch((err) => {
         console.log(err)
         setLoading(true);
-        // setSorteoFinal([]);
+        setSorteoFinal([]);
         setRecargar(false);
         setAlert({ message: 'Ocurrio un problema en el servidor', status: 'error', open: true });
-        // handleDrawerOpen();
+        handleDrawerOpen();
       });
   };
 

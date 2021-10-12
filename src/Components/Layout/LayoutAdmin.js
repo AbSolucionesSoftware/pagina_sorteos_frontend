@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import NavegacionAdministrador from '../NavegacionAdmin/NavegacionAdmin';
 import { AdminProvider } from '../../Context/AdminContext';
 import { makeStyles } from '@material-ui/styles';
+import Error404 from '../../Pages/FrontUsers/Error';
 
 const drawerWidth = 280;
 
@@ -50,7 +51,7 @@ export default function LayoutAdministrador(props) {
     const {routes } = props;
     const user = JSON.parse(localStorage.getItem('user'));
     
-    if(!user){return null};
+    if(!user){<Error404 />};
     
     return (
         <React.Fragment>

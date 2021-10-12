@@ -12,16 +12,16 @@ const useStyles = makeStyles((theme) => ({
     imagen:{
         maxHeight: '100%',
         maxWidth: '100%'
-      },
-      dropZone: {
-          width: 500,
-          height: 230,
-          display:"flex",
-          justifyContent: "center",
-          alignContent: "center",
-          border: 'dashed 2px',
-          borderColor: '#aaaaaa'
-      }
+    },
+    dropZone: {
+        width: 500,
+        height: 230,
+        display:"flex",
+        justifyContent: "center",
+        alignContent: "center",
+        border: 'dashed 2px',
+        borderColor: '#aaaaaa'
+    }
 }));
 
 export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImagen, setDataImagen, preview, setPreview}) {

@@ -52,7 +52,7 @@ export default function SorteosEliminados() {
             <Container>
                 <Grid container item lg={12}>
                     <Box textAlign="center">
-                        <Typography>
+                        <Typography variant="h5">
                             Sorteos Eliminados
                         </Typography>
                     </Box>
