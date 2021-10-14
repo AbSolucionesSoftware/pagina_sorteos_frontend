@@ -22,29 +22,29 @@ export default function Preguntas() {
                 {
                     datos?.preguntas?.map((pregunta, index) => {
                         return(
-                            <Box p={.3}>
-                            <Paper elevation={8}>
-                                <Accordion 
-                                    expanded={expanded === index} 
-                                    onChange={handleChange(index)}
-                                    style={{background:'#1B1B1B', color:'white'}}
-                                >
-                                    <AccordionSummary
-                                        expandIcon={<ExpandMoreIcon style={{color: 'white', fontSize: 40}} />}
-                                        aria-controls="panel1bh-content"
-                                        id="panel1bh-header"
+                            <Box p={1}>
+                                <Paper elevation={8}>
+                                    <Accordion 
+                                        expanded={expanded === index} 
+                                        onChange={handleChange(index)}
+                                        style={{background:'#1B1B1B', color:'white'}}
                                     >
-                                        <Typography variant='h5' sx={{ width: '100%', flexShrink: 0 }}>
-                                            {pregunta.pregunta}
-                                        </Typography>
-                                    </AccordionSummary>
-                                    <AccordionDetails>
-                                        <Typography variant='h6'>
-                                            {pregunta.respuesta}
-                                        </Typography>
-                                    </AccordionDetails>
-                                </Accordion>
-                            </Paper>
+                                        <AccordionSummary
+                                            expandIcon={<ExpandMoreIcon style={{color: 'white', fontSize: 40}} />}
+                                            aria-controls="panel1bh-content"
+                                            id="panel1bh-header"
+                                        >
+                                            <Typography variant='h5' sx={{ width: '100%', flexShrink: 0 }}>
+                                                {pregunta.pregunta}
+                                            </Typography>
+                                        </AccordionSummary>
+                                        <AccordionDetails>
+                                            <Typography variant='h6'>
+                                                {pregunta.respuesta}
+                                            </Typography>
+                                        </AccordionDetails>
+                                    </Accordion>
+                                </Paper>
                             </Box>
                         )
                     })

@@ -32,7 +32,6 @@ export default function RelojSorteo() {
         setHoras(hora);
         setMinutos(minuto);
         setSegundos(segundo);
-        
     };
 
     setInterval(relojDeInicio, 1000);
@@ -52,19 +51,7 @@ export default function RelojSorteo() {
                         </Typography>
                     </Box>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }} textAlign='center' >
-                        <Box display="flex" >
-                            {/* <Box display="flex" flexDirection="column" p={3} >
-                                <Box>
-                                    <Typography  variant='h1' >
-                                        <b>{meses}</b>
-                                    </Typography>
-                                </Box>
-                                <Box>
-                                    <Typography variant="h6">
-                                        <b>meses</b>
-                                    </Typography>
-                                </Box>
-                            </Box> */}
+                        <Box display="flex" textAlign='center' >
                             <Box display="flex" flexDirection="column" p={3} ml={3}>
                                 <Box>
                                     <Typography  variant='h1' >
@@ -115,20 +102,15 @@ export default function RelojSorteo() {
                             </Box>
                         </Box>
                     </Box>
-                    <Box mt={3} mb={2} sx={{ display: { xs: 'block', sm: 'none' } }} textAlign='center'>
+                    <Box 
+                        p={2} 
+                        sx={{ display: { xs: 'block', sm: 'none' } }} 
+                        textAlign='center' 
+                        justifyContent="center"
+                        alignItems="center"
+                        justifyItems="center"
+                    >
                         <Box display="flex" >
-                            {/* <Box display="flex" flexDirection="column" p={1} >
-                                <Box>
-                                    <Typography>
-                                        <b>{meses}</b>
-                                    </Typography>
-                                </Box>
-                                <Box>
-                                    <Typography>
-                                        <b>meses</b>
-                                    </Typography>
-                                </Box>
-                            </Box> */}
                             <Box display="flex" flexDirection="column" p={1}>
                                 <Box>
                                     <Typography>

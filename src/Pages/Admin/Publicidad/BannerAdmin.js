@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'center',
         textAlign: 'center',
         alignItems: 'center',
-        width: '90%'
+        width: '70%'
     }
 }))
 

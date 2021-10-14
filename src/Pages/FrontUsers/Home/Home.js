@@ -24,7 +24,7 @@ export default function Home() {
                     </Box>
                 )}
                 {datos?.preguntas?.length === 0 ? null : (
-                    <Box>
+                    <Box my={3}>
                         <Preguntas />
                     </Box>
                 )}

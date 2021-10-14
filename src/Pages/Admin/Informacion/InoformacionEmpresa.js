@@ -54,7 +54,7 @@ export default function InoformacionEmpresa() {
         if (datos) {
             setPreview(datos.imgEmpresaUrl);
         }
-    }, []);
+    }, [datos]);
 
     if (loading)
 	return (

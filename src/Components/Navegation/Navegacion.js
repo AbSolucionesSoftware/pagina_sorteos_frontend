@@ -70,10 +70,23 @@ export default function Navegacion() {
                     <Box sx={{display: 'flex', justifyContent: 'left', alignItems: 'center'}}>
                         <Box sx={{ display: { xs: 'none', lg: 'block'} }} className={classes.containerImage}>
                             <Avatar
+                                component={Link} to={`/`}
                                 sx={{ width: 85, height: 85 }}
                             >
                                 <img 
                                     className={classes.image}
+                                    src={datos.imgEmpresaUrl} 
+                                    alt="imagen logo" 
+                                />
+                            </Avatar>
+                        </Box>
+                        <Box sx={{ display: { xs: 'block', md: 'none', lg: 'none'} }} className={classes.containerImageRes}>
+                            <Avatar
+                                component={Link} to={`/`}
+                                sx={{ width: 30, height: 30 }}
+                            >
+                                <img 
+                                    className={classes.imageRes}
                                     src={datos.imgEmpresaUrl} 
                                     alt="imagen logo" 
                                 />
@@ -98,7 +111,7 @@ export default function Navegacion() {
                             </ListItem>
                         </Grid>
                         <Grid>
-                            <ListItem button component={Link}>
+                            <ListItem button component={Link} to={`/`}>
                                 <ListItemText>
                                     <Typography variant='h6' >
                                         <b>Preguntas Frecuentes</b>
@@ -143,6 +156,7 @@ export default function Navegacion() {
                 open={openDrawer}
                 onClose={handleOpen}
             >
+                <Box height="100%" style={{background: 'black', color: '#76ff03'}}>
                 <Box sx={{display: 'flex', justifyContent: 'center'}}>
                     <Box className={classes.containerImageDrawer}>
                         <img 
@@ -154,46 +168,57 @@ export default function Navegacion() {
                 </Box>
                 <List>
                     <ListItem disablePadding>
-                        <ListItemButton component={Link} to={`/`}>
+                        <ListItemButton component={Link} to={`/`} onClick={handleOpen}>
                             <ListItemIcon>
                                 <HomeIcon />
                             </ListItemIcon>
                             <Typography>
-                                Inicio
+                                <b>Inicio</b>
                             </Typography>
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton component={Link} to={`/`}>
+                        <ListItemButton component={Link} to={`/`} onClick={handleOpen}>
                             <ListItemIcon>
                                 <ContactSupportIcon />
                             </ListItemIcon>
                             <Typography>
-                                Preguntas Frecuentes
+                            <b>Preguntas Frecuentes</b>
                             </Typography>
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton component={Link} to={`/sorteos/boletos`}>
+                        <ListItemButton component={Link} to={`/sorteos/boletos`} onClick={handleOpen}>
                             <ListItemIcon>
                                 <ConfirmationNumberIcon />
                             </ListItemIcon>
                             <Typography>
-                                Comprar Boleto
+                            <b>Comprar Boleto</b>
                             </Typography>
                         </ListItemButton>
                     </ListItem>
                     <ListItem disablePadding>
-                        <ListItemButton component={Link} to={`/sorteos/login`}>
+                        <ListItemButton component={Link} to={`/sorteos/verificador`} onClick={handleOpen}>
+                            <ListItemIcon>
+                                <HomeIcon />
+                            </ListItemIcon>
+                            <Typography>
+                            <b>Verificador boletos</b>
+                            </Typography>
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemButton component={Link} to={`/sorteos/login`} onClick={handleOpen}>
                             <ListItemIcon>
                                 <ConfirmationNumberIcon />
                             </ListItemIcon>
                             <Typography>
-                                Sesion
+                            <b>Sesion</b>
                             </Typography>
                         </ListItemButton>
                     </ListItem>
                 </List>
+                </Box>
             </Drawer>
         </>
     )

@@ -11,7 +11,7 @@ import { AdminContext } from '../../../Context/AdminContext';
 import { useDropzone } from 'react-dropzone';
 
 const useStyles = makeStyles((theme) => ({
-    image: {
+    imagen: {
 		maxHeight: '100%',
 		maxWidth: '100%',
         display: 'flex',
@@ -62,21 +62,21 @@ export default function SorteoAdministrador() {
 
     const onDrop = useCallback(
 		(files) => {
-			setPreview(URL.createObjectURL(files[0]));
-			setDataImagen({
-				...dataImagen,
-				imagen: files[0]
-			});
+            setPreview(URL.createObjectURL(files[0]));
+            setDataImagen({
+                ...dataImagen,
+                imagen: files[0]
+            });
 		},
 		[ dataImagen, setDataImagen, setPreview ]
 	);
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
+    
     useEffect(() => {
         if (sorteo) {
             setPreview(sorteo.imgSorteoBoletosUrl);
         }
-    }, []);
+    }, [sorteo]);
 
     useEffect(() => {
         traerSorteoActivo();
@@ -92,8 +92,6 @@ export default function SorteoAdministrador() {
 			<CircularProgress />
 		</Box>
 	);
-
-console.log(sorteo)
     
     return (
         <Container>
@@ -125,7 +123,7 @@ console.log(sorteo)
                                 
                                 {sorteo ? 
                                     <Box display="flex" justifyContent="flex-end" p={1}>
-                                        <BoletosSorteo sorteo={sorteo} />
+                                        <BoletosSorteo loading={loading} setLoading={setLoading} sorteo={sorteo} />
                                     </Box>
                                     : null
                                 }
@@ -163,29 +161,6 @@ console.log(sorteo)
                                     </Box>
                                 </div>
                                 <div className={classes.formInputFlex}>
-                                    {/* <Box width="100%" p={1}>
-                                        <Typography>
-                                            <b>Lista de Premios: </b>
-                                        </Typography>
-                                        {sorteo?.lista_premios?.map((premio, index) =>{
-                                            return(
-                                                <Box p={1}>
-                                                    <Typography>
-                                                        <b>{index+1}° Lugar</b>
-                                                    </Typography>
-                                                    <TextField
-                                                        fullWidth
-                                                        size="small"
-                                                        name="fecha_sorteo"
-                                                        value={sorteo ? premio.premio : ''}
-                                                        id="form-producto-clave-alterna"
-                                                        variant="outlined"
-                                                        onChange={obtenerCampos}
-                                                    />
-                                                </Box>
-                                            )
-                                        })}
-                                    </Box> */}
                                     <Box width="100%" p={1}>
                                         <Typography>
                                             <b>Precio de boleto: </b>

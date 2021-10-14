@@ -1,22 +1,21 @@
-import { AppBar, Button, Grid, IconButton, InputBase, Paper, Slide, TextField, Typography } from '@material-ui/core';
+import { AppBar, Button, CircularProgress, Grid, IconButton, InputBase, Paper, Slide, TextField, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import React, { useContext, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import clienteAxios from '../../../Config/axios';
 import { AdminContext } from '../../../Context/AdminContext';
-
+import SnackBarMessages from '../../../Components/SnackBarMessages';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function BoletosSorteo({sorteo}) {
-	const { setAlert } = useContext(AdminContext);
+export default function BoletosSorteo({sorteo, loading, setLoading}) {
+	const { setAlert, alert } = useContext(AdminContext);
 
     const [ open, setOpen ] = useState(false);
     const [infoBoleto, setInfoBoleto] = useState([]);
-    const [loading, setLoading] = useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(!open);
@@ -28,11 +27,17 @@ export default function BoletosSorteo({sorteo}) {
         setOpenBoleto(!openBoleto);
     };
 
-    const desactivarSorteo = async () => {
+    const obtenerDatos =(e)=>{
+        setInfoBoleto({...infoBoleto, [e.target.name]: e.target.value})
+    }
+
+    const comprarBoleto = async () => {
         setLoading(true);
         await clienteAxios
-        .put(`/sorteo/buscarBoleto/${sorteo._id}`,{sorteo_activo: false })
+        .put(`/sorteo/comprarBoletoSorteo/${infoBoleto._id}`, infoBoleto)
         .then((res) => {
+            handleDrawerOpenBoleto();
+            setLoading(true);
             setAlert(res.data.message);
             setLoading(false);
         })
@@ -42,9 +47,16 @@ export default function BoletosSorteo({sorteo}) {
         });
     };
 
+    if (loading)
+	return (
+		<Box display="flex" justifyContent="center" alignItems="center" height="30vh">
+			<CircularProgress />
+		</Box>
+	);
     
     return (
         <>
+            <SnackBarMessages alert={alert} setAlert={setAlert} />
             <Box display="flex" justifyContent="flex-end">
                 <Button
                     variant='contained'
@@ -100,8 +112,9 @@ export default function BoletosSorteo({sorteo}) {
                                         setInfoBoleto(element)
                                     }}
                                 >
-                                    <Paper elevantion={3}>
-                                        <Box p={1}>
+                                    <Paper elevantion={3} style={{backgroundColor: (element.vendido === true ? "#2e7d32" : "")}} >
+                                        <Box p={1} >
+                                            {console.log(element.vendido)}
                                             <Typography> <b>{element.numero_boleto}</b> </Typography>
                                         </Box>
                                     </Paper>
@@ -112,7 +125,7 @@ export default function BoletosSorteo({sorteo}) {
                 </Grid>
               </DialogContent>
               <DialogActions>
-                  <Button color='primary' variant='contained' onClick={handleDrawerOpen}>Cancelar</Button>
+                  <Button color='error' variant='contained' onClick={handleDrawerOpen}>Cerrar</Button>
               </DialogActions>
           </Dialog>
 
@@ -141,65 +154,71 @@ export default function BoletosSorteo({sorteo}) {
                         </Box>
                         <Box display="flex" width="100%" p={1}>
                             <Typography variant="h6">
-                                <b>Nombres: </b> {infoBoleto.nombres}
+                                <b>Nombres: </b> 
                             </Typography>
                             <TextField
                                 fullWidth
                                 size="small"
                                 name="nombres"
+                                onChange={obtenerDatos}
+                                value={infoBoleto.nombres ? infoBoleto.nombres : ""}
                                 id="form-producto-clave-alterna"
                                 variant="outlined"
                             />
                         </Box>
                         <Box display="flex" width="100%" p={1}>
                             <Typography variant="h6">
-                                <b>Apellidos: </b> {infoBoleto.apellidos}
+                                <b>Apellidos: </b> 
                             </Typography>
                             <TextField
                                 fullWidth
                                 size="small"
                                 name="apellidos"
+                                onChange={obtenerDatos}
+                                value={infoBoleto.apellidos ? infoBoleto.apellidos : ""}
                                 id="form-producto-clave-alterna"
                                 variant="outlined"
                             />
                         </Box>
                         <Box display="flex" width="100%" p={1}>
                             <Typography variant="h6">
-                                <b>Telefono: </b> {infoBoleto.telefono}
+                                <b>Telefono: </b> 
                             </Typography>
                             <TextField
                                 fullWidth
                                 size="small"
                                 name="telefono"
+                                onChange={obtenerDatos}
+                                value={infoBoleto.telefono ? infoBoleto.telefono : ""}
                                 id="form-producto-clave-alterna"
                                 variant="outlined"
                             />
                         </Box>
                         <Box display="flex" width="100%" p={1}>
                             <Typography variant="h6">
-                                <b>Estado: </b> {infoBoleto.estado}
+                                <b>Estado: </b>
                             </Typography>
                             <TextField
                                 fullWidth
                                 size="small"
                                 name="estado"
+                                value={infoBoleto.estado ? infoBoleto.estado : ""}
+                                onChange={obtenerDatos}
                                 id="form-producto-clave-alterna"
                                 variant="outlined"
                             />
                         </Box>
-                        <Box display="flex" width="100%" p={1}>
-                            <Typography variant="h6">
-                                <b>Pagado: </b> {infoBoleto.domicilio}
-                            </Typography>
+                        <Box display="flex" width="100%" justifyContent="center" justifyItems="center" p={1}>
+                            {infoBoleto.vendido === true ? <Typography variant="h5" style={{color: "green"}}><b>  Vendido</b></Typography> : ""}
                         </Box>
                     </Grid>
               </DialogContent>
               <DialogActions>
                 <DialogActions>
-                    <Button color='primary' variant='contained' onClick={handleDrawerOpenBoleto}>Aceptar</Button>
+                    <Button color='error' variant='contained' onClick={handleDrawerOpenBoleto}>Cerrar</Button>
                     {
                         infoBoleto.vendido === false ? (
-                            <Button color='primary' variant='contained' onClick={handleDrawerOpenBoleto}>Registrar</Button>
+                            <Button color='primary' variant='contained' onClick={comprarBoleto}>Registrar</Button>
                         ):(null)
                     }
                 </DialogActions>

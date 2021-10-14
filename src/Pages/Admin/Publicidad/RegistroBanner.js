@@ -123,7 +123,7 @@ export default function RegistroBanner() {
                     <Grid item lg={12}>
                         <Box textAlign="center" display="flex" justifyContent="center" mt={3}>
                             <Alert severity="info">
-                                Tamaño recomendado para su imagen: Alto: 580px, Ancho: 1920px
+                                Tamaño recomendado para su imagen: Alto: 690px, Ancho: 1920px
                             </Alert>
                         </Box>
                     </Grid>

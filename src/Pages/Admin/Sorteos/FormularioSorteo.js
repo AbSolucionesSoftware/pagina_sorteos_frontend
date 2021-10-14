@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/styles';
 import { Box } from '@material-ui/system';
 import { useDropzone } from 'react-dropzone';
 import { Delete } from '@material-ui/icons';
+import { Alert } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
     formInputFlex: {
@@ -195,6 +196,13 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
                         <b>Imagen Promocional</b>
                     </Typography>
                 </Box>
+                <Grid item lg={12}>
+                    <Box textAlign="center" display="flex" justifyContent="center" mt={3}>
+                        <Alert severity="info">
+                            Tamaño recomendado para su imagen: Alto: 1300px, Ancho: 800px
+                        </Alert>
+                    </Box>
+                </Grid>
                 <div className={classes.formInputFlex}>
                     <Box
                         className={classes.dropZone}
