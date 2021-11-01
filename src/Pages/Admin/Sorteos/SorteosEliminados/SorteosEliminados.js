@@ -22,12 +22,12 @@ export default function SorteosEliminados() {
     const [loading, setLoading] = useState(false);
     const [sorteo, setSorteo] = useState([]);
     const [expanded, setExpanded] = useState(false);
-    const [ openModal, setOpenModal ] = useState(false);
+    /* const [ openModal, setOpenModal ] = useState(false); */
 
     const handleChange = (panel) => (event, isExpanded) => {
         setExpanded(isExpanded ? panel : false);
     };
-    const handleModal = () => setOpenModal(!openModal);
+    /* const handleModal = () => setOpenModal(!openModal); */
 
     const traerSorteoActivo = async () => {
         await clienteAxios
@@ -50,13 +50,6 @@ export default function SorteosEliminados() {
     return (
         <>
             <Container>
-                <Grid container item lg={12}>
-                    <Box textAlign="center">
-                        <Typography variant="h5">
-                            Sorteos Eliminados
-                        </Typography>
-                    </Box>
-                </Grid>
                 <Grid item lg={10} xs={12}>
                     {
                         sorteo?.map((sorteo, index) =>{

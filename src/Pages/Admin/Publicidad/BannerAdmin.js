@@ -1,5 +1,5 @@
 import React,{useContext, useEffect, useState} from 'react';
-import { Button, Grid, Paper, Typography } from '@material-ui/core'
+import { Button, Grid, Paper } from '@material-ui/core'
 import { Box } from '@material-ui/system'
 import RegistroBanner from './RegistroBanner'
 import clienteAxios from '../../../Config/axios';
@@ -7,10 +7,11 @@ import { AdminContext } from '../../../Context/AdminContext';
 import { CircularProgress, Dialog, DialogActions, DialogTitle} from '@mui/material';
 import { makeStyles } from '@material-ui/styles';
 import SnackBarMessages from '../../../Components/SnackBarMessages';
+import { Delete } from '@material-ui/icons';
 
 const useStyles = makeStyles(() => ({
     imagen:{
-        maxHeight: '100%',
+        maxHeight: '400px',
         maxWidth: '100%',
         display: 'flex',
         justifyContent: 'center',
@@ -20,15 +21,13 @@ const useStyles = makeStyles(() => ({
     containerImagen: {
         display: 'flex',
         justifyContent: 'center',
-        textAlign: 'center',
         alignItems: 'center',
-        width: '70%'
     }
 }))
 
 export default function BannerAdmin() {
     const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'));
+    /* const user = JSON.parse(localStorage.getItem('user')); */
 	const { alert, setAlert, reload, setReload } = useContext(AdminContext);
     const classes = useStyles();
 
@@ -91,37 +90,27 @@ export default function BannerAdmin() {
     return (
         <div>
             <SnackBarMessages alert={alert} setAlert={setAlert} />
-            <Grid item lg={12}>
-                <Box textAlign="center">
-                    <Typography variant="h4">
-                        Publicidad
-                    </Typography>
-                    <Box mt={3}>
-                        <Typography variant="h6">
-                            Apartado publicitario para la zona de frente de tu pagína web
-                        </Typography>
-                    </Box>
-                </Box>
-            </Grid>
             
-            <RegistroBanner />
+            <Box display="flex" justifyContent="flex-end">
+                <RegistroBanner />
+            </Box>
             {
                 banners?.bannersComapny?.map((banner) => {
                     return(
                         <Grid item lg={12} xs={12}>
                             <Box textAlign='center' p={2}>
                                 <Paper elevation={8}>
-                                    <Box display="flex" justifyContent='flex-start' p={1}>
+                                    <Box position="absolute" p={1}>
                                         <Button
+                                            variant="contained"
                                             color="error"
-                                            variant='contained'
-                                            size='large'
+                                            size='small'
                                             onClick={() => {
                                                 handleModal() 
                                                 setIdBanner(banner._id) 
                                             }}
                                         >
-                                            Eliminar
+                                            <Delete />
                                         </Button>
                                     </Box>
                                     <Box p={1} className={classes.containerImagen}>

@@ -29,7 +29,7 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
 
     const classes = useStyles();
     const [ premiosSorteo, setPremiosSorteo ] = useState([]);
-    const [ listaPremios, setListaPremios ] = useState([]);
+    const listaPremios = [];
     
     const onDrop = useCallback(
 		(files) => {
@@ -47,7 +47,9 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
         if (sorteoFinal) {
             setPreview(sorteoFinal.imgSorteoBoletosUrl);
         }
-    }, []);
+    }, [setPreview, sorteoFinal]);
+
+    console.log("infinite");
 
     const obtenerCamposSorteo = (e) => {
         setSorteoFinal({...sorteoFinal,  [e.target.name]: e.target.value});

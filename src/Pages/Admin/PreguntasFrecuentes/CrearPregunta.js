@@ -2,12 +2,12 @@ import React, { useContext, useState } from 'react';
 
 import Button from '@mui/material/Button';
 import { Dialog } from '@material-ui/core';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { makeStyles } from '@material-ui/styles';
 import { Box } from '@mui/system';
 import clienteAxios from '../../../Config/axios';
 import { AdminContext } from '../../../Context/AdminContext';
+import { Add } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     formInputFlex: {
@@ -61,8 +61,8 @@ export default function CrearPregunta({ setLoading}) {
         <div>
             <Button 
                 size='large'
-                startIcon={<AddCircleOutlineIcon/>}
-                variant="outlined"
+                startIcon={<Add />}
+                variant="text"
                 onClick={handleClickOpen}
             >
                 Agregar pregunta

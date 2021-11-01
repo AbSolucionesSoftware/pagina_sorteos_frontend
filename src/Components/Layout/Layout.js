@@ -8,7 +8,6 @@ import { Route, Switch } from 'react-router-dom';
 import { PaginaProvider } from '../../Context/PaginaContext';
 import Navegacion from '../Navegation/Navegacion';
 import Footer from '../Footer/Footer';
-import { Box } from '@material-ui/system';
 
 function HideOnScroll(props) {
   const { children, window } = props;

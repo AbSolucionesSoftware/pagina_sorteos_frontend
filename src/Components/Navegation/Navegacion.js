@@ -4,11 +4,11 @@ import { Avatar, Box, Drawer, Grid, IconButton, List, ListItem, ListItemButton, 
 import DehazeIcon from '@material-ui/icons/Dehaze';
 import HomeIcon from '@material-ui/icons/Home';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
-import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
+/* import VerifiedUserIcon from '@material-ui/icons/VerifiedUser'; */
 import ConfirmationNumberIcon from '@material-ui/icons/ConfirmationNumber';
 
 import useStyles from './Styles';
-import { HashLink } from 'react-router-hash-link';
+/* import { HashLink } from 'react-router-hash-link'; */
 import { Link } from 'react-router-dom';
 import clienteAxios from '../../Config/axios';
 import { PaginaContext } from '../../Context/PaginaContext';
@@ -17,7 +17,7 @@ export default function Navegacion() {
     const { datos, setDatos, reload, setReload, setDatosSorteo } = React.useContext(PaginaContext);
     const classes = useStyles();
     const [openDrawer, setOpenDrawer] = useState(false);
-    const user = JSON.parse(localStorage.getItem('user'));
+    /* const user = JSON.parse(localStorage.getItem('user')); */
 
     const handleOpen = () => {
         setOpenDrawer(!openDrawer);

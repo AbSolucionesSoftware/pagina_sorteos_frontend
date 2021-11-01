@@ -1,82 +1,57 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import Slide from '@material-ui/core/Slide';
-import { Route, Switch } from 'react-router-dom';
+import * as React from "react";
+import { Route, Switch } from "react-router-dom";
 
-import NavegacionAdministrador from '../NavegacionAdmin/NavegacionAdmin';
-import { AdminProvider } from '../../Context/AdminContext';
-import { makeStyles } from '@material-ui/styles';
-import Error404 from '../../Pages/FrontUsers/Error';
+import NavegacionAdministrador from "../NavegacionAdmin/NavAdmin";
+import { AdminProvider } from "../../Context/AdminContext";
+import Error404 from "../../Pages/FrontUsers/Error";
+import { Toolbar } from "@material-ui/core";
+import { Box } from "@material-ui/system";
 
-const drawerWidth = 280;
+const drawerWidth = 240;
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		display: 'flex',
-	},
-	drawerPaper: {
-		width: drawerWidth,
-	},
-  appBar: {
-		width: `calc(100% - ${drawerWidth}px)`,
-		marginLeft: drawerWidth,
-	},
-	content: {
-		flexGrow: 1,
-    padding: 3
-	},
-}));
+export default function LayoutAdministrador(props) {
+  const { routes } = props;
+  const user = JSON.parse(localStorage.getItem("user"));
 
-function HideOnScroll(props) {
-  const { children, window } = props;
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-  });
+  if (!user) {
+    <Error404 />;
+  }
 
   return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
+    <React.Fragment>
+      <AdminProvider>
+        <Box sx={{ display: "flex" }}>
+          <NavegacionAdministrador />
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              p: 3,
+              width: { sm: `calc(100% - ${drawerWidth}px)` },
+            }}
+          >
+            <Toolbar />
+            <div style={{ minHeight: "90vh" }}>
+              <LoadRoutes routes={routes} />
+            </div>
+          </Box>
+        </Box>
+      </AdminProvider>
+    </React.Fragment>
   );
 }
 
-HideOnScroll.propTypes = {
-  children: PropTypes.element.isRequired,
-  window: PropTypes.func,
-};
-
-export default function LayoutAdministrador(props) {
-    const classes = useStyles();
-    const {routes } = props;
-    const user = JSON.parse(localStorage.getItem('user'));
-    
-    if(!user){<Error404 />};
-    
-    return (
-        <React.Fragment>
-        <AdminProvider>
-            <HideOnScroll {...props} >
-              <div className={classes.drawerPaper} aria-label="mailbox folders">
-                <NavegacionAdministrador />
-              </div> 
-            </HideOnScroll>
-            <div className={classes.appBar}>
-                <div style={{ minHeight: '90vh' }}>
-                    <LoadRoutes routes={routes} />
-                </div>
-            </div>
-          </AdminProvider>
-        </React.Fragment>
-    )
-}
-
-function LoadRoutes({routes}) {
-    return(
-        <Switch>
-            {routes.map((route, index) => (
-                <Route key={index} path={route.path}  exact={route.exact} component={route.component}/>
-            ))}
-        </Switch>
-    )
+function LoadRoutes({ routes }) {
+  return (
+    <Switch>
+      {routes.map((route, index) => (
+        <Route
+          key={index}
+          path={route.path}
+          exact={route.exact}
+          component={route.component}
+        />
+      ))}
+    </Switch>
+  );
 }

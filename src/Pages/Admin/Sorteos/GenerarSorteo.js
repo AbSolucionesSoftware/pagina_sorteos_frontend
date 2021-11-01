@@ -1,11 +1,12 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, CircularProgress, Dialog, AppBar, DialogActions, DialogContent, Slide, Tab, Tabs, Typography } from '@material-ui/core';
+import { Button, CircularProgress, Dialog, AppBar, DialogActions, DialogContent, Slide, Tab, Tabs } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import FormularioSorteo from './FormularioSorteo';  
 import GeneradorNumeros from './GeneradorNumeros';
 import clienteAxios from '../../../Config/axios';
 import { AdminContext } from '../../../Context/AdminContext';
+import { Add } from '@material-ui/icons';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -24,7 +25,7 @@ function TabPanel(props) {
       >
         {value === index && (
           <Box sx={{ p: 3 }}>
-            <Typography>{children}</Typography>
+            {children}
           </Box>
         )}
       </div>
@@ -113,9 +114,10 @@ export default function GenerarSorteo({loading, setLoading}) {
       <div>
         <Box p={1} >
           <Button
-              variant='outlined'
+              variant='text'
               size='large'
               color='primary'
+              startIcon={<Add />}
               onClick={handleDrawerOpen}
           >
             Generar Sorteo

@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 export default function GeneradorNumeros({sorteoFinal, setSorteoFinal}) {
     const classes = useStyles();
     const [cifrasBoletos, setCifrasBoletos] = useState([]);
-    const [boletos, setBoletos] = useState([])
+    const boletos = [];
 
     const obtenerCampos = (e) => {
         setCifrasBoletos({...cifrasBoletos, [e.target.name]: parseInt(e.target.value)})

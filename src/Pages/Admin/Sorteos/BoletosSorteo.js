@@ -101,11 +101,12 @@ export default function BoletosSorteo({sorteo, loading, setLoading}) {
                 </Box>
             </AppBar>
               <DialogContent>
-                <Grid container lg={12}>
+                <Grid container>
                     {
-                        sorteo?.boletos?.map((element) => {
+                        sorteo?.boletos?.map((element, index) => {
                             return(
                                 <Box 
+                                key={index}
                                     p={1}
                                     onClick={() => {
                                         handleDrawerOpenBoleto()
@@ -114,7 +115,6 @@ export default function BoletosSorteo({sorteo, loading, setLoading}) {
                                 >
                                     <Paper elevantion={3} style={{backgroundColor: (element.vendido === true ? "#2e7d32" : "")}} >
                                         <Box p={1} >
-                                            {console.log(element.vendido)}
                                             <Typography> <b>{element.numero_boleto}</b> </Typography>
                                         </Box>
                                     </Paper>
@@ -146,7 +146,7 @@ export default function BoletosSorteo({sorteo, loading, setLoading}) {
                         </Typography>
                         
                     </Box>
-                    <Grid lg={12}>
+                    <Grid>
                         <Box display="flex" width="100%" p={1}>
                             <Typography variant="h6">
                                 <b>No. de Boleto: </b> {infoBoleto.numero_boleto}

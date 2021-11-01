@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 
 import Button from '@mui/material/Button';
 import { Dialog } from '@material-ui/core';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import Add from '@material-ui/icons/Add';
 import { DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@mui/material';
 import { makeStyles } from '@material-ui/styles';
 import { Box } from '@mui/system';
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CrearNuevoVideo({ setLoading}) {
-	const { datos, setReload, alert, setAlert } = useContext(AdminContext);
+	const { datos, setReload, /* alert, */ setAlert } = useContext(AdminContext);
 
     const [open, setOpen] = useState(false);
     const [video, setVideo] = useState([]);
@@ -62,8 +62,8 @@ export default function CrearNuevoVideo({ setLoading}) {
         <div>
             <Button 
                 size='large'
-                startIcon={<AddCircleOutlineIcon/>}
-                variant="outlined"
+                startIcon={<Add/>}
+                variant="text"
                 onClick={handleClickOpen}
             >
                 Agregar Video
