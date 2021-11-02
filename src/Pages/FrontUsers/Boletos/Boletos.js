@@ -85,7 +85,7 @@ export default function Boletos({type}) {
                         <b>¡Premios!</b>
                     </Typography>
                 </Box>
-                {
+                {/* {
                     sorteo?.lista_premios?.map((premio, index) => {
                         return(
                             <Box display="flex" justifyContent="center" alignItems="center" justifyItems="center" textAlign="center" p={1}>
@@ -102,7 +102,7 @@ export default function Boletos({type}) {
                             </Box>
                         )
                     })
-                }
+                } */}
             </Box>
             {
                 type === 'FRENTE' ? (

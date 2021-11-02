@@ -18,6 +18,8 @@ import SnackBarMessages from "../../../Components/SnackBarMessages";
 import { AdminContext } from "../../../Context/AdminContext";
 import { useDropzone } from "react-dropzone";
 import EditarSorteo from "./EditarSorteo";
+import CardPremio from './CardPremio';
+import Divider from '@mui/material/Divider';
 
 const useStyles = makeStyles((theme) => ({
   imagen: {
@@ -36,14 +38,20 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
   dropZone: {
-    width: 500,
-    height: 230,
+    width: 550,
+    height: 280,
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
     border: "dashed 2px",
     borderColor: "#aaaaaa",
   },
+  input_100: {
+    width: "100%"
+  },
+  m: {
+    margin: "0px 5px"
+  }
 }));
 
 export default function SorteoAdministrador() {
@@ -68,6 +76,8 @@ export default function SorteoAdministrador() {
         console.log(err);
       });
   };
+
+  console.log(sorteo);
 
   const onDrop = useCallback(
     (files) => {
@@ -142,51 +152,6 @@ export default function SorteoAdministrador() {
             </Box>
             <Box p={1}>
               <div className={classes.formInputFlex}>
-                <Box width="100%" p={1}>
-                  <Typography>
-                    <b>Nombre Sorteo: </b>
-                  </Typography>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    name="nombre_sorteo"
-                    value={sorteo ? sorteo.nombre_sorteo : ""}
-                    id="form-producto-clave-alterna"
-                    variant="outlined"
-                    onChange={obtenerCampos}
-                  />
-                </Box>
-                <Box width="100%" p={1}>
-                  <Typography>
-                    <b>Fecha Sorteo: </b>
-                  </Typography>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    name="fecha_sorteo"
-                    value={sorteo ? sorteo.fecha_sorteo : ""}
-                    type="date"
-                    id="form-producto-clave-alterna"
-                    variant="outlined"
-                    onChange={obtenerCampos}
-                  />
-                </Box>
-              </div>
-              <div className={classes.formInputFlex}>
-                <Box width="100%" p={1}>
-                  <Typography>
-                    <b>Precio de boleto: </b>
-                  </Typography>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    name="precio_boleto"
-                    value={sorteo ? sorteo.precio_boleto : ""}
-                    id="form-producto-clave-alterna"
-                    variant="outlined"
-                    onChange={obtenerCampos}
-                  />
-                </Box>
                 <Box
                   className={classes.dropZone}
                   {...getRootProps()}
@@ -200,7 +165,7 @@ export default function SorteoAdministrador() {
                   <input {...getInputProps()} />
                   {dataImagen.imagen || preview ? (
                     <Box
-                      height={200}
+                      height={230}
                       display="flex"
                       justifyContent="center"
                       alignItems="center"
@@ -220,6 +185,67 @@ export default function SorteoAdministrador() {
                     </Typography>
                   )}
                 </Box>
+                <div className={classes.input_100} >
+                  <Box width="100%" p={1}>
+                    <Typography>
+                      <b>Nombre Sorteo: </b>
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      name="nombre_sorteo"
+                      value={sorteo ? sorteo.nombre_sorteo : ""}
+                      id="form-producto-clave-alterna"
+                      variant="outlined"
+                      onChange={obtenerCampos}
+                    />
+                  </Box>
+                  <Box width="100%" p={1}>
+                    <Typography>
+                      <b>Fecha Sorteo: </b>
+                    </Typography>
+                    <TextField
+                      fullWidth
+                      size="small"
+                      name="fecha_sorteo"
+                      value={sorteo ? sorteo.fecha_sorteo : ""}
+                      type="date"
+                      id="form-producto-clave-alterna"
+                      variant="outlined"
+                      onChange={obtenerCampos}
+                    />
+                  </Box>
+                  <Box width="100%" p={1}>
+                  <Typography>
+                    <b>Precio de boleto: </b>
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    name="precio_boleto"
+                    value={sorteo ? sorteo.precio_boleto : ""}
+                    id="form-producto-clave-alterna"
+                    variant="outlined"
+                    onChange={obtenerCampos}
+                  />
+                </Box>
+                </div>
+              </div>
+              <Box p={4}>
+                <Divider>PREMIOS</Divider>
+              </Box>
+              <div>
+                  <Box display="flex" >
+                    <Box width="100%" p={1}>
+                      <CardPremio id={1} />
+                    </Box>
+                    <Box width="100%" p={1}>
+                      <CardPremio id={2} />
+                    </Box>
+                    <Box width="100%" p={1}>
+                      <CardPremio id={3} />
+                    </Box>
+                  </Box>
               </div>
             </Box>
             <Box display="flex" justifyContent="flex-end">
