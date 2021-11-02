@@ -41,7 +41,7 @@ export default function Layout(props) {
               </AppBar>
             </HideOnScroll>
             <Toolbar />
-            <div style={{minHeight: '85vh', background: '#76ff03'}}>
+            <div style={{minHeight: '85vh',/*  background: '#76ff03' */}}>
                 <LoadRoutes routes={routes} />
             </div>
             <div >
