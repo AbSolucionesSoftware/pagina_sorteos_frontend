@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import SnackBarMessages from '../../../Components/SnackBarMessages';
 
 import {
   TextField,
@@ -7,7 +8,6 @@ import {
   Container,
 } from "@material-ui/core";
 import { withRouter } from "react-router";
-import clienteAxios from "../../../Config/axios";
 import PagoPayPal from "./pago_paypal"
 import { PaginaContext } from "../../../Context/PaginaContext";
 
@@ -15,7 +15,12 @@ function FormularioDatos({sorteo}) {
 
   const [datosBoleto, setDatosBoleto] = useState([]);
   const { boletos_seleccionados } = React.useContext(PaginaContext);
-
+  const [alert, setAlert] = useState({
+    message: "",
+    status: "",
+    open: false,
+  })
+  
   const obtenerDatos = (e) => {
     setDatosBoleto({ ...datosBoleto, [e.target.name]: e.target.value });
   };
@@ -51,6 +56,7 @@ let order = {
 
   return (
     <Fragment>
+      <SnackBarMessages alert={alert} setAlert={setAlert} />
       <Box p={2} textAlign="center">
         <Typography variant="h5">
           Por favor completa tus datos para continuar la compra de tu boleto
@@ -98,7 +104,7 @@ let order = {
         margin="dense"
       />
       <Box sx={{display: "flex", justifyContent: "center", my: 2}}>
-        <PagoPayPal order={order} datosBoleto={datosBoleto} />
+        <PagoPayPal order={order} datosBoleto={datosBoleto} setAlert={setAlert} />
       </Box>
       </Container>
       

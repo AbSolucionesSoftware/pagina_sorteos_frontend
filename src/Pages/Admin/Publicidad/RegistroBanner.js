@@ -48,7 +48,7 @@ export default function RegistroBanner() {
   const [dataImagen, setDataImagen] = useState("");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("tokenSorteos");
 
   const handleDrawerOpen = () => {
     setOpen(!open);

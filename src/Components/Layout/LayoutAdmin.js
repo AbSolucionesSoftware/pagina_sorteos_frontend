@@ -11,7 +11,7 @@ const drawerWidth = 240;
 
 export default function LayoutAdministrador(props) {
   const { routes } = props;
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("userSorteos"));
 
   if (!user) {
     <Error404 />;

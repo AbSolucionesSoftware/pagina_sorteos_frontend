@@ -8,7 +8,7 @@ import { Edit } from "@material-ui/icons";
 export default function EditarSorteo({ sorteo, dataImagen }) {
   const [loading, setLoading] = useState(false);
   const { setAlert } = useContext(AdminContext);
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("tokenSorteos");
 
   const editarSorteo = async () => {
     setLoading(true);

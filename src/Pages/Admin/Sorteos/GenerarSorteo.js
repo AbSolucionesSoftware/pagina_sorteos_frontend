@@ -53,7 +53,7 @@ export default function GenerarSorteo({loading, setLoading}) {
     const [ dataImagen, setDataImagen ]= useState([]);
     const [ value, setValue ] = React.useState(0);
     const [ recargar, setRecargar ] = useState(false);
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('tokenSorteos');
     const [ sorteoFinal, setSorteoFinal ] = useState([])
 
   if (recargar)

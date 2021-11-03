@@ -26,8 +26,8 @@ const useStyles = makeStyles(() => ({
 }))
 
 export default function BannerAdmin() {
-    const token = localStorage.getItem('token');
-    /* const user = JSON.parse(localStorage.getItem('user')); */
+    const token = localStorage.getItem('tokenSorteos');
+    /* const user = JSON.parse(localStorage.getItem('userSorteos')); */
 	const { alert, setAlert, reload, setReload } = useContext(AdminContext);
     const classes = useStyles();
 

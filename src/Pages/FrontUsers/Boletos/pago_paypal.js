@@ -5,8 +5,8 @@ import { Box } from "@material-ui/core";
 import { Fragment } from "react";
 import clienteAxios from "../../../Config/axios";
 
-export default function PagoPaypal({ order, datosBoleto }) {
-  const token = localStorage.getItem("token");
+export default function PagoPaypal({ order, datosBoleto, setAlert }) {
+  const token = localStorage.getItem("tokenSorteos");
 
   const paypalConfig = {
     currency: "MXN",
@@ -77,19 +77,30 @@ export default function PagoPaypal({ order, datosBoleto }) {
 	 		})
 	 		.catch((error) => {
 				 console.log(error);
-	 			/* setSnackbar({
+	 			setAlert({
 					open: true,
-					mensaje: error,
+					message: error,
 					status: 'error'
-				}); */
+				});
 	 		});
   };
 
   const onError = (error) => {
 	  console.log(error);
+    setAlert({
+      message: "Hubo un error con la solicitud",
+      status: "error",
+      open: true,
+    })
   };
 
-  const onCancel = (data, actions) => {};
+  const onCancel = (data, actions) => {
+    setAlert({
+      message: "Solicitud cancelada",
+      status: "error",
+      open: true,
+    })
+  };
 
   return (
     <Fragment>

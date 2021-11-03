@@ -13,7 +13,7 @@ export default function Preguntas() {
     };
     return (
         <Fragment>
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" id="preguntas">
                 <Box mt={5} mb={3} textAlign='center' >
                     <Typography variant='h3'>
                         <b>Preguntas frecuentes</b>

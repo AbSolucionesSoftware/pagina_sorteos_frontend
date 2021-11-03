@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 
 import {
   Box,
   Button,
   Chip,
+  CircularProgress,
   Grid,
   IconButton,
   InputBase,
@@ -11,26 +12,11 @@ import {
   Typography,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { Link } from "react-router-dom";
 import clienteAxios from "../../../Config/axios";
-import { makeStyles } from "@material-ui/styles";
 import { PaginaContext } from "../../../Context/PaginaContext";
 import ComprarBoletos from "./Comprar";
+import ListaPremios from "./ListaPremios";
 
-const useStyles = makeStyles((theme) => ({
-  containerImagen: {
-    height: 500,
-    width: 500,
-  },
-  image: {
-    minHeight: "100%",
-    minWidth: "100%",
-    display: "flex",
-    justifyItems: "center",
-    alignContent: "center",
-    alignItems: "center",
-  },
-}));
 
 export default function Boletos({ type }) {
   const {
@@ -38,22 +24,29 @@ export default function Boletos({ type }) {
     boletos_seleccionados,
     setBoletosSeleccionados,
   } = React.useContext(PaginaContext);
-  const classes = useStyles();
   const [sorteo, setSorteo] = useState([]);
   const [boletos, setBoletos] = useState([]);
   const [numeroBoleto, setNumeroBoleto] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const traerSorteoActivo = async () => {
-    await clienteAxios
+  const traerSorteoActivo = useCallback(
+    async () => {
+      setLoading(true)
+      await clienteAxios
       .get(`/sorteo/getSorteoActivo`)
       .then((res) => {
+        console.log(res);
         setSorteo(res.data.sorteo);
         setBoletos(res.data.sorteo.boletos);
+        setLoading(false)
       })
       .catch((err) => {
+        setLoading(false)
         console.log(err);
       });
-  };
+    },
+    [ ],
+  )
 
   const traerDatosBoleto = async () => {
     console.log("si entra la condicion");
@@ -80,17 +73,22 @@ export default function Boletos({ type }) {
 
   useEffect(() => {
     traerSorteoActivo();
-  }, []);
+  }, [traerSorteoActivo]);
+
+  console.log("inifinit");
 
   const pressEnter = (e) => {
     if (!e.target.defaultValue) return;
     traerDatosBoleto();
   };
 
-  if (!sorteo) return null;
-
-  return (
-    <>
+  if (loading && !sorteo.length){
+    return <Box height="400px" display="flex" justifyContent="center" alignItems="center">
+      <CircularProgress />
+    </Box>
+  }else{
+    return (
+    <Fragment>
       <Box textAlign="center">
         <Box p={4}>
           <Typography variant="h6">
@@ -107,29 +105,7 @@ export default function Boletos({ type }) {
             <b>¡Premios!</b>
           </Typography>
         </Box>
-        {/* {sorteo?.lista_premios?.map((premio, index) => {
-          return (
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              justifyItems="center"
-              textAlign="center"
-              p={1}
-            >
-              <Box p={1}>
-                <Typography variant="h5">
-                  <b>{index + 1}° Lugar </b>
-                </Typography>
-              </Box>
-              <Box p={1}>
-                <Typography variant="h5">
-                  <b> {premio.premio} </b>
-                </Typography>
-              </Box>
-            </Box>
-          );
-        })} */}
+        <ListaPremios sorteo={sorteo} />
       </Box>
       {type === "FRENTE" ? (
         <Box p={3} textAlign="center">
@@ -296,8 +272,11 @@ export default function Boletos({ type }) {
           </Grid>
         </>
       )}
-    </>
+    </Fragment>
   );
+  }
+
+  
 }
 
 const RenderNumeros = ({ boleto, seleccionarBoletos, index }) => {

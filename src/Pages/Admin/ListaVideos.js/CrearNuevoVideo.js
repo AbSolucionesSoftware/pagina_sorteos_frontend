@@ -20,7 +20,7 @@ export default function CrearNuevoVideo({ setLoading}) {
 
     const [open, setOpen] = useState(false);
     const [video, setVideo] = useState([]);
-	const token = localStorage.getItem('token');
+	const token = localStorage.getItem('tokenSorteos');
 
     const handleClickOpen =()=>{
         setOpen(!open);

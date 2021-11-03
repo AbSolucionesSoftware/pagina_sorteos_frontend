@@ -10,8 +10,8 @@ import { Delete } from '@material-ui/icons';
 
 
 export default function ListaPreguntas() {
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem('tokenSorteos');
+    const user = JSON.parse(localStorage.getItem('userSorteos'));
     const { datos, setReload, setAlert, alert  } = useContext(AdminContext);
     const [expanded, setExpanded] = useState(false);
     const [loading, setLoading] = useState(false);

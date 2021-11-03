@@ -19,7 +19,7 @@ export default function CrearPregunta({ setLoading}) {
 	const { datos, setReload, setAlert  } = useContext(AdminContext);
     const [open, setOpen] = useState(false);
     const [preguntas, setPreguntas] = useState([]);
-	const token = localStorage.getItem('token');
+	const token = localStorage.getItem('tokenSorteos');
 
     const handleClickOpen =()=>{
         setOpen(!open);

@@ -143,8 +143,8 @@ export default function NavegacionAdministrador() {
                                 component={Link} 
                                 to={`/`}
                                 onClick={ () =>{
-                                    localStorage.removeItem('user')
-                                    localStorage.removeItem('token')
+                                    localStorage.removeItem('userSorteos')
+                                    localStorage.removeItem('tokenSorteos')
                                 }}
                             >
                                 <ListItemIcon>
@@ -238,8 +238,8 @@ export default function NavegacionAdministrador() {
                             component={Link} 
                             to={`/`}
                             onClick={ () =>{
-                                localStorage.removeItem('user')
-                                localStorage.removeItem('token')
+                                localStorage.removeItem('userSorteos')
+                                localStorage.removeItem('tokenSorteos')
                             }}
                         >
                             <ListItemIcon>

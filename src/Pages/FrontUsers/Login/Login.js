@@ -54,9 +54,9 @@ export default function Login() {
 				const decoded = jwt_decode(res.data.token);
 				setLoading(false);
 				const token = res.data.token;
-				localStorage.setItem('token', token);
-				localStorage.setItem('user', JSON.stringify(decoded));
-				const user = JSON.parse(localStorage.getItem('user'));
+				localStorage.setItem('tokenSorteos', token);
+				localStorage.setItem('userSorteos', JSON.stringify(decoded));
+				const user = JSON.parse(localStorage.getItem('userSorteos'));
                 console.log(user);
 				window.location.href = '/admin';
 
