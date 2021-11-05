@@ -9,10 +9,10 @@ const useStyles = makeStyles({
         alignContent: 'center',
         alignItems: 'center'
 	},
-	containerImage:{
+	/* containerImage:{
 		width: 100,
 		height: 90
-	},
+	}, */
 	imageRes: {
 		maxHeight: '100%',
 		maxWidth: '100%',
@@ -21,13 +21,13 @@ const useStyles = makeStyles({
         alignContent: 'center',
         alignItems: 'center'
 	},
-	containerImageRes:{
+	/* containerImageRes:{
 		width: 34,
 		height: 30
-	},
+	}, */
 	containerImageDrawer:{
-		width: 100,
-		height: 100
+		width: '100px',
+		height: '100px'
 	}
 });
 

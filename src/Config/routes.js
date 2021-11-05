@@ -84,7 +84,7 @@ const routes = [
 				exact: true,
 			},
 			{
-				path: '/sorteos/login',
+				path: '/login',
 				component: Login,
 				exact: true,
 			},

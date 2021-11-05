@@ -17,8 +17,6 @@ export default function PagoPaypal({ order, datosBoleto, setAlert }) {
     },
   };
 
-  console.log(order);
-
   const PayPalButton = Paypal.Button.driver("react", { React, ReactDOM });
 
   const payment = (data, actions) => {
@@ -128,7 +126,7 @@ export default function PagoPaypal({ order, datosBoleto, setAlert }) {
           onError={(error) => onError(error)}
           style={{
             label: "pay",
-            size: "large",
+            size: "medium",
             shape: "rect",
             color: "blue",
           }}

@@ -38,8 +38,6 @@ function FormularioDatos({sorteo}) {
 
   if(!boletos_seleccionados.length) return null
 
-  console.log(boletos_seleccionados);
-
   let items = [{	
     sku: boletos_seleccionados[0]._id,
     name: 'Promoción boletos 4x1',
