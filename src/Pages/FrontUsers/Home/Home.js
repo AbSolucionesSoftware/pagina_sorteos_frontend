@@ -4,8 +4,7 @@ import { PaginaContext } from "../../../Context/PaginaContext";
 import BannerPromocional from "../Banner/BannerPromocional";
 import Preguntas from "../PreguntasFrecuentes/Preguntas";
 import QuienesSomos from "../QuienesSomos/QuienesSomos";
-import RelojSorteo from "../RelojSorteo/CronoSorteo";
-import RelojSorteo2 from "../RelojSorteo/RelojSorteo";
+import RelojSorteo from "../RelojSorteo/RelojSorteo";
 import VideosDeGanadores from "../VideosPremios/VideosDeGanadores";
 import { Parallax } from "rc-scroll-anim";
 import Boletos from "../Boletos/Boletos";
@@ -17,23 +16,14 @@ export default function Home() {
       <Box>
         <BannerPromocional />
       </Box>
-      {/* <Box
-        style={{ background: "#000", color: "#fff" }}
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <RelojSorteo />
-      </Box> */}
       <Box
         style={{ background: "#000", color: "#fff" }}
         display="flex"
         justifyContent="center"
         alignItems="center"
       >
-        <RelojSorteo2 />
+        <RelojSorteo />
       </Box>
-
       <Boletos type="FRENTE" />
       {datos?.quienes_somos === undefined ? null : (
         <Box mt={5}>
