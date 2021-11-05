@@ -7,9 +7,9 @@ import IconButton from "@mui/material/IconButton";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { Link } from "react-router-dom";
+import { deepOrange } from "@material-ui/core/colors";
 
 export default function AccountMenu() {
-  const user = JSON.parse(localStorage.getItem("userSorteos"));
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -27,9 +27,7 @@ export default function AccountMenu() {
   return (
     <React.Fragment>
       <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-        <Avatar sx={{ width: 32, height: 32 }}>
-          {user.nameUser.charAt(0)}
-        </Avatar>
+        <Avatar sx={{ width: 32, height: 32, bgcolor: deepOrange[500] }} />
       </IconButton>
       <Menu
         anchorEl={anchorEl}

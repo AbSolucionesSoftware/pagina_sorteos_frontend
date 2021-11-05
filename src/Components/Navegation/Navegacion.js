@@ -9,16 +9,18 @@ import {
   ListItem,
   ListItemButton,
   ListItemIcon,
+  ListItemText,
   Typography,
 } from "@material-ui/core";
 
 import DehazeIcon from "@material-ui/icons/Dehaze";
 import useStyles from "./Styles";
-/* import { HashLink } from 'react-router-hash-link'; */
 import { Link } from "react-router-dom";
 import clienteAxios from "../../Config/axios";
 import { PaginaContext } from "../../Context/PaginaContext";
 import AccountMenu from "./AccountMenu";
+import { Verified } from "@mui/icons-material";
+import { Home, Money, QuestionAnswer } from "@material-ui/icons";
 
 export default function Navegacion() {
   const {
@@ -32,8 +34,6 @@ export default function Navegacion() {
   const [openDrawer, setOpenDrawer] = useState(false);
   const user = JSON.parse(localStorage.getItem("userSorteos"));
   const token = localStorage.getItem("tokenSorteos");
-
-  console.log(user);
 
   const handleOpen = () => {
     setOpenDrawer(!openDrawer);
@@ -71,15 +71,19 @@ export default function Navegacion() {
 
   return (
     <Fragment>
-      <Box sx={{ display: { xs: "block", sm: "block", md: "none" } }}>
+      <Box
+        sx={{ display: { xs: "flex", sm: "flex", md: "none", width: "100%" } }}
+      >
         <IconButton
           onClick={handleOpen}
-          color="success"
+          color="inherit"
           size="large"
           component="span"
         >
           <DehazeIcon size="large" />
         </IconButton>
+        <Box flexGrow={1} />
+        {token !== null && user !== null ? <AccountMenu /> : null}
       </Box>
       <Box
         sx={{
@@ -89,7 +93,7 @@ export default function Navegacion() {
         }}
       >
         <Box className={classes.containerImage}>
-          <Avatar component={Link} to={`/`} sx={{ width: 85, height: 85 }}>
+          <Avatar component={Link} to={`/`}>
             <img
               className={classes.image}
               src={datos.imgEmpresaUrl}
@@ -97,19 +101,7 @@ export default function Navegacion() {
             />
           </Avatar>
         </Box>
-        <Box
-          sx={{ display: { xs: "block", md: "none", lg: "none" } }}
-          className={classes.containerImageRes}
-        >
-          <Avatar component={Link} to={`/`} sx={{ width: 30, height: 30 }}>
-            <img
-              className={classes.imageRes}
-              src={datos.imgEmpresaUrl}
-              alt="imagen logo"
-            />
-          </Avatar>
-        </Box>
-        <Box display="flex" alignContent="center" justifyItems="center">
+        <Box display="flex" alignContent="center" justifyItems="center" mx={1}>
           <Typography variant="h6">
             <b>{datos.nombre_empresa}</b>
           </Typography>
@@ -120,6 +112,11 @@ export default function Navegacion() {
           sx={{ textTransform: "none", fontSize: 17, mx: 1 }}
           component={Link}
           to={`/`}
+          onClick={() =>
+            setTimeout(() => {
+              window.scrollTo(0, 0);
+            }, 200)
+          }
         >
           Inicio
         </Button>
@@ -128,25 +125,32 @@ export default function Navegacion() {
           sx={{ textTransform: "none", fontSize: 17, mx: 1 }}
           component={Link}
           to={`/`}
-          onClick={() => setTimeout(() => {
-            window.scrollTo(0, 1000)
-          }, 300)}
+          onClick={() =>
+            setTimeout(() => {
+              window.scrollTo(0, 2000);
+            }, 200)
+          }
         >
           Preguntas Frecuentes
         </Button>
-        <Button
+        {/* <Button
           color="inherit"
           sx={{ textTransform: "none", fontSize: 17, mx: 1 }}
           component={Link}
           to={`/sorteos/verificador`}
         >
           Verificar Boleto
-        </Button>
+        </Button> */}
         <Button
           color="inherit"
           sx={{ textTransform: "none", fontSize: 17, mx: 1 }}
           component={Link}
           to={`/sorteos/boletos`}
+          onClick={() =>
+            setTimeout(() => {
+              window.scrollTo(0, 0);
+            }, 200)
+          }
         >
           Comprar Boleto
         </Button>
@@ -155,7 +159,7 @@ export default function Navegacion() {
 
       {/* MODO RESPONSIVO */}
       <Drawer anchor="left" open={openDrawer} onClose={handleOpen}>
-        <Box height="100%" style={{ background: "black", color: "#76ff03" }}>
+        <Box height="100%">
           <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Box className={classes.containerImageDrawer}>
               <img
@@ -167,44 +171,65 @@ export default function Navegacion() {
           </Box>
           <List>
             <ListItem disablePadding>
-              {token !== null && user !== null ? <AccountMenu /> : null}
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton component={Link} to={`/`} onClick={handleOpen}>
-                <Typography>
-                  <b>Inicio</b>
-                </Typography>
+              <ListItemButton component={Link} to={`/`} onClick={() => {
+                handleOpen();
+                setTimeout(() => {
+                  window.scrollTo(0, 0);
+                }, 200)
+              }}>
+                <ListItemIcon>
+                  <Home />
+                </ListItemIcon>
+                <ListItemText primary="Inicio" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton component={Link} to={`/`} onClick={handleOpen}>
-                <Typography>
-                  <b>Preguntas Frecuentes</b>
-                </Typography>
+              <ListItemButton component={Link} to={`/`} onClick={() => {
+                handleOpen();
+                setTimeout(() => {
+                  window.scrollTo(0, 2000);
+                }, 200)
+              }}>
+                <ListItemIcon>
+                  <QuestionAnswer />
+                </ListItemIcon>
+                <ListItemText primary="Preguntas Frecuentes" />
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
               <ListItemButton
                 component={Link}
                 to={`/sorteos/boletos`}
-                onClick={handleOpen}
+                onClick={() => {
+                  handleOpen();
+                  setTimeout(() => {
+                    window.scrollTo(0, 0);
+                  }, 200)
+                }}
               >
-                <Typography>
-                  <b>Comprar Boleto</b>
-                </Typography>
+                <ListItemIcon>
+                  <Money />
+                </ListItemIcon>
+                <ListItemText primary="Comprar Boleto" />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding>
+            {/* <ListItem disablePadding>
               <ListItemButton
                 component={Link}
                 to={`/sorteos/verificador`}
-                onClick={handleOpen}
+                onClick={() => {
+                  handleOpen();
+                  setTimeout(() => {
+                    window.scrollTo(0, 0);
+                  }, 200)
+                }}
               >
-                <Typography>
-                  <b>Verificador boletos</b>
-                </Typography>
+                <ListItemIcon>
+                  <Verified />
+                </ListItemIcon>
+                <ListItemText primary="Verificador boletos" />
               </ListItemButton>
-            </ListItem>
+            </ListItem> */}
           </List>
         </Box>
       </Drawer>

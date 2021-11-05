@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom";
 
 import NavegacionAdministrador from "../NavegacionAdmin/NavAdmin";
 import { AdminProvider } from "../../Context/AdminContext";
-import Error404 from "../../Pages/FrontUsers/Error";
 import { Toolbar } from "@material-ui/core";
 import { Box } from "@material-ui/system";
 
@@ -12,9 +11,8 @@ const drawerWidth = 240;
 export default function LayoutAdministrador(props) {
   const { routes } = props;
   const user = JSON.parse(localStorage.getItem("userSorteos"));
-
   if (!user) {
-    <Error404 />;
+    props.history.push('/')
   }
 
   return (
