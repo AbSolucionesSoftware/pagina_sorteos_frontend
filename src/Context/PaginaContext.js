@@ -7,6 +7,7 @@ export const PaginaProvider = ({ children }) => {
     const [ datos, setDatos ] = useState([]);
     const [ datosSorteo, setDatosSorteo ] = useState([]);
     const [ reload, setReload ] = useState(false);
+    const [ boletos_seleccionados, setBoletosSeleccionados ] = useState([])
 
 	return (
 		<PaginaContext.Provider value={
@@ -16,7 +17,9 @@ export const PaginaProvider = ({ children }) => {
                 reload, 
                 setReload,
                 datosSorteo, 
-                setDatosSorteo
+                setDatosSorteo,
+                boletos_seleccionados, 
+                setBoletosSeleccionados
             }
         }>
 			{children}

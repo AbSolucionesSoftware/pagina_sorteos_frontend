@@ -199,8 +199,8 @@ function NavegacionAdministrador(props) {
             color="error"
             startIcon={<ExitToAppIcon />}
             onClick={() => {
-              localStorage.removeItem("user");
-              localStorage.removeItem("token");
+              localStorage.removeItem("userSorteos");
+              localStorage.removeItem("tokenSorteos");
               window.location.reload();
             }}
           >

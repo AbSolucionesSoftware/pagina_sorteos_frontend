@@ -37,7 +37,7 @@ export default function InoformacionEmpresa() {
   const { datos, setDatos, /* alert, */ setAlert } = useContext(AdminContext);
   const [dataImagen, setDataImagen] = useState([]);
   const [loading, setLoading] = useState(false);
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("tokenSorteos");
   const [preview, setPreview] = useState("");
   const classes = useStyles();
 

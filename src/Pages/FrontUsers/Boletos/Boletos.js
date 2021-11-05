@@ -1,236 +1,274 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  Chip,
+  CircularProgress,
+  Container,
+  Grid,
+  InputBase,
+  Paper,
+  Typography,
+} from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+import clienteAxios from "../../../Config/axios";
+import { PaginaContext } from "../../../Context/PaginaContext";
+import ComprarBoletos from "./Comprar";
+import ListaPremios from "./ListaPremios";
 
-import { Box, Button, Chip, Grid, IconButton, InputBase, Paper,  Typography } from '@material-ui/core'
-import SearchIcon from '@material-ui/icons/Search';
-import { Link } from 'react-router-dom';
-import clienteAxios from '../../../Config/axios';
-import { makeStyles } from '@material-ui/styles';
-import { PaginaContext } from '../../../Context/PaginaContext';
+export default function Boletos({ type }) {
+  const { boletos_seleccionados, setBoletosSeleccionados } = React.useContext(
+    PaginaContext
+  );
+  const [sorteo, setSorteo] = useState([]);
+  const [boletos, setBoletos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-const useStyles = makeStyles((theme) => ({
-    
-    containerImagen: {
-		height: 500,
-        width: 500
-	},
-    image: {
-		minHeight: '100%',
-        minWidth: '100%',
-        display: 'flex',
-        justifyItems: 'center',
-        alignContent: 'center',
-        alignItems: 'center'
-	},
-   
-}));
+  const [busqueda, setBusqueda] = useState("");
+  const [boletosFiltrados, setBoletosFiltrados] = useState([]);
 
-export default function Boletos({type}) {
-    const { datos } = React.useContext(PaginaContext);
-    const classes = useStyles();
-    const [sorteo, setSorteo] = useState([]);
-    const [boletos, setBoletos] = useState([]);
-    const [numeroBoleto, setNumeroBoleto] = useState([]);
+  const traerSorteoActivo = useCallback(async () => {
+    setLoading(true);
+    await clienteAxios
+      .get(`/sorteo/getSorteoActivo`)
+      .then((res) => {
+        setSorteo(res.data.sorteo);
+        setBoletos(res.data.sorteo.boletos);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  }, []);
 
-    const traerSorteoActivo = async () => {
-        await clienteAxios
-        .get(`/sorteo/getSorteoActivo`)
-        .then((res) => {
-            setSorteo(res.data.sorteo);
-            setBoletos(res.data.sorteo.boletos);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+  useEffect(() => {
+    setBoletosFiltrados(
+      boletos.filter((boleto) => {
+        return boleto.numero_boleto.includes(busqueda);
+      })
+    );
+  }, [busqueda, boletos]);
 
-    const traerDatosBoleto = async () => {
-        console.log("si entra la condicion");
-        await clienteAxios
-        .post(`/sorteo/buscarBoleto/${datos._id}`, numeroBoleto)
-        .then((res) => {
-            console.log(res.data);
-            setBoletos(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
+  useEffect(() => {
+    traerSorteoActivo();
+  }, [traerSorteoActivo]);
 
-    useEffect(() => {
-        traerSorteoActivo();
-    }, []);
+  const seleccionarBoletos = (boleto, id) => {
+    const copy_boleto_select = [...boletos_seleccionados];
 
-    const pressEnter = (e) => {
-        if(!e.target.defaultValue) return;
-        traerDatosBoleto();
-    };
+    if (id !== undefined) {
+      /* copy_boleto_select.pop(index); */
+      const result = copy_boleto_select.filter((res) => res._id !== id);
+      setBoletosSeleccionados(result);
+    } else {
+      setBoletosSeleccionados([...copy_boleto_select, boleto]);
+    }
+  };
 
-    if(!sorteo) return null
+  console.log(boletos_seleccionados);
 
+  if (loading && !sorteo.length) {
     return (
-        <>
-            <Box textAlign='center'>  
-                <Box p={4}>
-                    <Typography variant="h6">
-                        Fecha del sorteo: <b>{sorteo ? sorteo.fecha_sorteo : null}</b>
-                    </Typography>
-                    <Typography variant='h3'>
-                        <b>{ sorteo ?  sorteo.nombre_sorteo  : null}</b>
-                    </Typography>
-                </Box>
-            </Box>
-            <Box style={{backgroundColor: 'white'}}>
-                <Box textAlign="center" p={2}>
-                    <Typography variant='h4'>
-                        <b>¡Premios!</b>
-                    </Typography>
-                </Box>
-                {/* {
-                    sorteo?.lista_premios?.map((premio, index) => {
-                        return(
-                            <Box display="flex" justifyContent="center" alignItems="center" justifyItems="center" textAlign="center" p={1}>
-                                <Box p={1}>
-                                    <Typography variant='h5'>
-                                        <b>{index+1}° Lugar  </b>
-                                    </Typography>
-                                </Box>
-                                <Box p={1}>
-                                    <Typography variant='h5'>
-                                        <b>  {premio.premio} </b>
-                                    </Typography>
-                                </Box>
-                            </Box>
-                        )
-                    })
-                } */}
-            </Box>
-            {
-                type === 'FRENTE' ? (
-                    <Box p={3} textAlign="center">
-                        <Button
-                            href="/sorteos/boletos"
-                            style={{color: 'white' , backgroundColor: 'black' }}
-                        >
-                            <Typography variant="h4">
-                                <b>Ver Boletos</b>
-                            </Typography> 
-                        </Button>
-                    </Box>
-                ) : (
-                    <Box p={2} textAlign="center">
-                        <Typography variant="h6">
-                            <b>Lista de boletos abajo</b>
-                        </Typography>
-                    </Box>
-                )
-            }
-            <Box p={2} mt={2} textAlign='center' display="flex" justifyContent="center" justifyItems="center" style={{backgroundColor: 'white'}}>  
-                <Box textAlign='center' style={{width: "70%", height: '80%'}} >
-                    <img 
-                        style={{width: '100%', height: '100%', display: "flex", justifyContent: "center"}}
-                        src={sorteo.imgSorteoBoletosUrl}
-                        alt="Imagen de sorteo"
-                    />
-                </Box>
-            </Box>
+      <Box
+        height="400px"
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
-            {
-                type === 'FRENTE' ? null : (
-                    <>
-                        <Box textAlign="center" p={2}>
-                            <Typography variant='h3'>
-                                <b>¡Boletos Disponibles!</b>
-                            </Typography>
-                        </Box>
-                        <Box p={3} style={{backgroundColor: "white"}} textAlign="center">
-                            <Typography variant="h5">
-                                <b>Precio Boleto</b>
-                            </Typography>
-                            <Typography variant="h2">
-                                <b>$ {sorteo.precio_boleto}.00 Mx.</b>
-                            </Typography>
-                        </Box>
-                        <Box textAlign="center" p={2}>
-                            <Box display="flex" justifyItems="center" justifyContent="center">
-                                <Box p={1} >
-                                    <Chip
-                                        style={{backgroundColor: "white"}}
-                                        label={<Box p={1}><Typography variant='h5'><b>0000</b></Typography></Box>}
-                                    />
-                                </Box>
-                                <Box p={1} >
-                                    <Typography variant="h6">
-                                        <b>Blancos boletos disponibles</b>
-                                    </Typography>
-                                </Box>
-                            </Box>
-                            <Box display="flex" justifyItems="center" justifyContent="center">
-                                <Box p={1} >
-                                    <Chip
-                                        style={{backgroundColor: "#2e7d32"}}
-                                        label={<Box p={1}><Typography variant='h5'><b>0000</b></Typography></Box>}
-                                    />
-                                </Box>
-                                <Box p={1} >
-                                    <Typography variant="h6">
-                                        <b>Verdes boletos vendidos</b>
-                                    </Typography>
-                                </Box>
-                            </Box>
-                        </Box>
-                       
-                        <Box display='flex' justifyItems='center' alignContent='center' textAlign='center'> 
-                            <Box width="50%" p={1}>
-                                <Paper
-                                    component="form"
-                                    sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 'auto' }}
-                                >
-                                    <InputBase
-                                        sx={{ ml: 1, flex: 1 }}
-                                        placeholder="Busca tu boleto"
-                                        inputProps={{ 'aria-label': 'busca tu boleto' }}
-                                        onKeyPress={pressEnter}
-                                        onChange={(e) => setNumeroBoleto({...numeroBoleto, numeroBoleto: e.target.value })}
-                                    />
-                                    <IconButton 
-                                        type="submit" 
-                                        sx={{ p: '10px' }} 
-                                        aria-label="search"
-                                        onClick={traerDatosBoleto}
-                                    >
-                                        <SearchIcon />
-                                    </IconButton>
-                                </Paper>
-                            </Box>
-                        </Box>
-                        <Grid container lg={12}>
-                            {
-                                boletos?.map((boleto) => {
-                                    return(
-                                        boleto.vendido === true ? (
-                                            <Box p={.5} >
-                                                <Chip
-                                                    style={{backgroundColor: "#2e7d32"}}
-                                                    label={<Box p={1}><Typography><b>{boleto.numero_boleto}</b></Typography></Box>}
-                                                />
-                                            </Box>
-                                        ):(
-                                            <Box p={.5} >
-                                                <Chip
-                                                    style={{backgroundColor: "white" }}
-                                                    component={Link}
-                                                    to={`/sorteos/comprar-boleto/${boleto.numero_boleto}/${boleto._id}`}
-                                                    label={<Box p={1}><Typography><b>{boleto.numero_boleto}</b></Typography></Box>}
-                                                />
-                                            </Box>
-                                        )
-                                    );
-                                })
-                            }
-                        </Grid>
-                    </>
-                )
-            }
-        </>
-    )
+  return (
+    <Fragment>
+      <Container maxWidth="lg" sx={{ p: 2, mt: type !== "FRENTE" ? 8 : 2 }}>
+        <Grid container spacing={3}>
+          <Grid
+            item
+            md={6}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100%",
+            }}
+          >
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              height="100%"
+              width="100%"
+            >
+              <img
+                style={{ maxWidth: "100%", maxHeight: "100%" }}
+                src={sorteo.imgSorteoBoletosUrl}
+                alt="Imagen de sorteo"
+              />
+            </Box>
+          </Grid>
+          <Grid
+            item
+            md={6}
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Box>
+              <Typography variant="h6">
+                Fecha del sorteo: <b>{sorteo ? sorteo.fecha_sorteo : null}</b>
+              </Typography>
+              <Typography variant="h3">
+                <b>{sorteo ? sorteo.nombre_sorteo : null}</b>
+              </Typography>
+            </Box>
+            <Box mt={4} width="100%">
+              <Typography variant="h3" textAlign="left">
+                <b>¡Boletos Disponibles!</b>
+              </Typography>
+              <Typography variant="h2">
+                <b>$ {sorteo.precio_boleto}.00 Mx.</b>
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
+      </Container>
+      <Box>
+        <Box textAlign="center" p={2}>
+          <Typography variant="h4">
+            <b>¡Premios!</b>
+          </Typography>
+        </Box>
+        <ListaPremios sorteo={sorteo} />
+      </Box>
+      {type === "FRENTE" ? (
+        <Box display="flex" justifyContent="center" mt={2}>
+          <Button
+            href="/sorteos/boletos"
+            size="large"
+            sx={{ fontSize: 24 }}
+            variant="contained"
+          >
+            ¡Compra tu Boleto!
+          </Button>
+        </Box>
+      ) : null}
+
+      {type === "FRENTE" ? null : (
+        <Fragment>
+          <Box textAlign="center" p={2} bgcolor="black">
+            <Typography color="white" variant="h3">
+              <b>Boletos</b>
+            </Typography>
+          </Box>
+          <Container maxWidth="lg" sx={{ mt: 2 }}>
+            <Grid container spacing={2}>
+              <Grid item md={6} xs={12}>
+                <Paper
+                  component="form"
+                  variant="outlined"
+                  sx={{
+                    p: "2px 4px",
+                    display: "flex",
+                    alignItems: "center",
+                    width: "auto",
+                  }}
+                >
+                  <SearchIcon color="action" />
+                  <InputBase
+                    fullWidth
+                    sx={{ ml: 1, flex: 1 }}
+                    placeholder="Busca tu boleto"
+                    inputProps={{ "aria-label": "busca tu boleto" }}
+                    onChange={(e) => setBusqueda(e.target.value)}
+                  />
+                </Paper>
+              </Grid>
+              <Grid
+                item
+                md={6}
+                xs={12}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Box display="flex" justifyItems="center" flexGrow={1}>
+                  <Chip variant="outlined" label="Disponibles" />
+                  <Box mx={1} />
+                  <Chip
+                    disabled
+                    style={{ backgroundColor: "#2e7d32" }}
+                    label="Vendidos"
+                  />
+                </Box>
+                <ComprarBoletos sx={{ mt: 1 }} sorteo={sorteo} />
+              </Grid>
+            </Grid>
+            <Grid container spacing={1} sx={{my: 2}}>
+              {boletosFiltrados.map((boleto, index) => (
+                <Grid item key={index}>
+                  <RenderNumeros
+                    boleto={boleto}
+                    seleccionarBoletos={seleccionarBoletos}
+                    boletosFiltrados={boletosFiltrados}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </Fragment>
+      )}
+    </Fragment>
+  );
 }
+
+const RenderNumeros = ({ boleto, seleccionarBoletos, boletosFiltrados }) => {
+  const [seleccionado, setSeleccionado] = useState([]);
+  const { boletos_seleccionados } = React.useContext(PaginaContext);
+
+  useEffect(() => {
+    setSeleccionado(
+      boletos_seleccionados.filter((res) => res._id === boleto._id)
+    );
+  }, [boletos_seleccionados, boletosFiltrados, boleto._id]);
+
+  const select = () => {
+    if (boletos_seleccionados.length >= 4 && !seleccionado.length) return;
+
+    if (seleccionado.length) {
+      seleccionarBoletos(boleto, boleto._id);
+    } else {
+      seleccionarBoletos(boleto);
+    }
+  };
+
+  return (
+    <Box>
+      <Chip
+        variant="outlined"
+        disabled={boleto.vendido}
+        onClick={() => select()}
+        style={
+          seleccionado.length > 0 && seleccionado[0]._id === boleto._id
+            ? { backgroundColor: "#2e7d32" }
+            : boleto.vendido
+            ? { backgroundColor: "#2e7d32" }
+            : { backgroundColor: "white" }
+        }
+        label={
+          <Box p={1}>
+            <Typography>
+              <b>{boleto.numero_boleto}</b>
+            </Typography>
+          </Box>
+        }
+      />
+    </Box>
+  );
+};

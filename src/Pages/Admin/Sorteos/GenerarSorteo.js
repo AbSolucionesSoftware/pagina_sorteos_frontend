@@ -45,8 +45,21 @@ export default function GenerarSorteo({loading, setLoading, setRefreash, refreas
     const [ open, setOpen ] = useState(false);
     
     const [ dataImagen, setDataImagen ]= useState([]);
-    const token = localStorage.getItem('token');
-    const [ sorteoFinal, setSorteoFinal ] = useState({});
+    const [ value, setValue ] = React.useState(0);
+    const [ recargar, setRecargar ] = useState(false);
+    const token = localStorage.getItem('tokenSorteos');
+    const [ sorteoFinal, setSorteoFinal ] = useState([])
+
+  if (recargar)
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="30vh">
+        <CircularProgress />
+      </Box>
+    );
+
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
 
     const handleDrawerOpen = () => {
       setOpen(!open);

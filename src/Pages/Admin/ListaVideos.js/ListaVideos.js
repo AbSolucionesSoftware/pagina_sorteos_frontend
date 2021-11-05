@@ -10,8 +10,8 @@ import SnackBarMessages from '../../../Components/SnackBarMessages';
 
 
 export default function ListaVideos() {
-    const token = localStorage.getItem('token');
-    const user = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem('tokenSorteos');
+    const user = JSON.parse(localStorage.getItem('userSorteos'));
     const [expanded, setExpanded] = useState(false);
 	const { datos, setReload, setAlert, alert } = useContext(AdminContext);
     const [ openModal, setOpenModal ] = useState(false);

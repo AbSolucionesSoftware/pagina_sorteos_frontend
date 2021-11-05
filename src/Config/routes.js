@@ -5,7 +5,6 @@ import Login from "../Pages/FrontUsers/Login/Login";
 import Verificador from "../Pages/FrontUsers/VerificadorBoletos/Verificador";
 import SorteoTerminado from "../Pages/FrontUsers/SorteoTerminado";
 import Boletos from "../Pages/FrontUsers/Boletos/Boletos";
-import ComprarBoleto from "../Pages/FrontUsers/Boletos/ComprarBoleto";
 
 import LayoutAdministrador from "../Components/Layout/LayoutAdmin";
 import SorteoAdministrador from "../Pages/Admin/Sorteos/Sorteo";
@@ -85,13 +84,8 @@ const routes = [
 				exact: true,
 			},
 			{
-				path: '/sorteos/login',
+				path: '/login',
 				component: Login,
-				exact: true,
-			},
-			{
-				path: '/sorteos/comprar-boleto/:numero/:idBoleto',
-				component: ComprarBoleto,
 				exact: true,
 			},
 			{
