@@ -1,16 +1,23 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Typography, Box } from "@material-ui/core";
 import { PaginaContext } from "../../../Context/PaginaContext";
 import moment from "moment";
 
 export default function RelojSorteo() {
   const { datosSorteo } = React.useContext(PaginaContext);
-  /* const [reloj, setReloj] = useState(""); */
-  /* const [meses, setMeses] = useState(""); */
   const [dias, setDias] = useState("");
   const [horas, setHoras] = useState("");
   const [minutos, setMinutos] = useState("");
   const [segundos, setSegundos] = useState("");
+
+  let intervalRef = useRef();
+
+  useEffect(() => {
+    if (datosSorteo) {
+      intervalRef.current = setInterval(relojDeInicio, 1000);
+    }
+    return () => clearInterval(intervalRef.current);
+  }, [datosSorteo]);
 
   if (!datosSorteo) {
     return null;
@@ -18,23 +25,20 @@ export default function RelojSorteo() {
 
   var final = moment(datosSorteo.fecha_sorteo);
 
-  const relojDeInicio = () => {
+  function relojDeInicio() {
     var inicio = moment();
     var duracion = final.diff(inicio);
     var intervalo = moment(duracion);
-    var mes = intervalo.month() + 1;
+    /* var mes = intervalo.month() + 1; */
     var diaDelMes = intervalo.date();
     var hora = intervalo.hour();
     var minuto = intervalo.minute();
     var segundo = intervalo.second();
-    /* setMeses(mes); */
     setDias(diaDelMes);
     setHoras(hora);
     setMinutos(minuto);
     setSegundos(segundo);
-  };
-
-  setInterval(relojDeInicio, 1000);
+  }
 
   return (
     <Fragment>
