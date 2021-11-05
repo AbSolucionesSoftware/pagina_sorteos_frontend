@@ -3,10 +3,9 @@ import { Divider, IconButton, Grid, Paper, TextField, Typography, Button } from 
 import { makeStyles } from '@material-ui/styles';
 import { Box } from '@material-ui/system';
 import { useDropzone } from 'react-dropzone';
-import { Delete } from '@material-ui/icons';
 import { Alert } from '@mui/material';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((_) => ({
     formInputFlex: {
         display: 'flex',
     },
@@ -25,11 +24,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImagen, setDataImagen, preview, setPreview}) {
+export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImagen, setDataImagen }) {
 
     const classes = useStyles();
-    const [ premiosSorteo, setPremiosSorteo ] = useState([]);
-    const listaPremios = [];
+    // const [ premiosSorteo, setPremiosSorteo ] = useState([]);
+    // const listaPremios = [];
+    const [ preview, setPreview ] = useState('');
     
     const onDrop = useCallback(
 		(files) => {
@@ -43,36 +43,36 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
 	);
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-    useEffect(() => {
-        if (sorteoFinal) {
-            setPreview(sorteoFinal.imgSorteoBoletosUrl);
-        }
-    }, [setPreview, sorteoFinal]);
+    // useEffect(() => {
+    //     if (sorteoFinal) {
+    //         setPreview(sorteoFinal.imgSorteoBoletosUrl);
+    //     }
+    // }, [setPreview, sorteoFinal]);
 
-    console.log("infinite");
+    // console.log("infinite");
 
     const obtenerCamposSorteo = (e) => {
         setSorteoFinal({...sorteoFinal,  [e.target.name]: e.target.value});
     };
 
-    const obtenerPremios = (e) => {
-        setPremiosSorteo({...premiosSorteo, [e.target.name]: e.target.value});
-    };
+    // const obtenerPremios = (e) => {
+    //     setPremiosSorteo({...premiosSorteo, [e.target.name]: e.target.value});
+    // };
 
-    const agregarPremio = () => {
-        listaPremios.push(premiosSorteo);
-        setSorteoFinal({...sorteoFinal,  lista_premios: listaPremios});
-        setPremiosSorteo([]);
-    };
+    // const agregarPremio = () => {
+    //     listaPremios.push(premiosSorteo);
+    //     setSorteoFinal({...sorteoFinal,  lista_premios: listaPremios});
+    //     setPremiosSorteo([]);
+    // };
 
-    function borrarExtra(key) {
-        listaPremios.forEach(function(elemento, indice, array) {
-            if(key === indice){
-                listaPremios.splice(key, 1);
-            }
-        })
-        setSorteoFinal({...sorteoFinal, lista_premios: listaPremios});
-    };
+    // function borrarExtra(key) {
+    //     listaPremios.forEach(function(elemento, indice, array) {
+    //         if(key === indice){
+    //             listaPremios.splice(key, 1);
+    //         }
+    //     })
+    //     setSorteoFinal({...sorteoFinal, lista_premios: listaPremios});
+    // };
 
     return (
         <div>
@@ -132,12 +132,12 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
                 <Box p={2} width='80%'>
                     <Divider/>
                 </Box>
-                <Box mt={1}>
+                {/* <Box mt={1}>
                     <Typography variant='h6'>
                     <b>Lista de Premios:</b>
                     </Typography>
-                </Box>
-                <div className={classes.formInputFlex}>
+                </Box> */}
+                {/* <div className={classes.formInputFlex}>
                     <Box width="100%" p={1}>
                         <Typography>
                             Premio:
@@ -161,8 +161,8 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
                             Agregar
                         </Button>
                     </Box>
-                </div>
-                
+                </div> */}
+{/*                 
                 {
                     sorteoFinal?.lista_premios?.map((premio, index) => {
                         return(
@@ -189,10 +189,10 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
                             </div>
                         )
                     })
-                }
-                <Box p={2} width='80%'>
+                } */}
+                {/* <Box p={2} width='80%'>
                     <Divider/>
-                </Box>
+                </Box> */}
                 <Box>
                     <Typography variant='h6'>
                         <b>Imagen Promocional</b>
@@ -205,7 +205,7 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
                         </Alert>
                     </Box>
                 </Grid>
-                <div className={classes.formInputFlex}>
+                <Grid item lg={12}>
                     <Box
                         className={classes.dropZone}
                         {...getRootProps()}
@@ -229,23 +229,7 @@ export default function FormularioSorteo({sorteoFinal, setSorteoFinal, dataImage
                             </Typography>
                         )}
                     </Box>
-                    <Box
-                        width='50%'
-                        display="flex"
-                        justifyContent="center"
-                        alignItems="center"
-                        textAlign="center"
-                    >
-                        <Button
-                            color="primary"
-                            variant="contained"
-                            onClick=""
-
-                        >
-                            Subir imagen
-                        </Button>
-                    </Box>
-                </div>
+                </Grid>
             </Box>
         </Paper>
         </div>

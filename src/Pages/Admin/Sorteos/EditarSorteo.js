@@ -23,7 +23,7 @@ export default function EditarSorteo({ sorteo, dataImagen }) {
     }
 
     await clienteAxios
-      .put(`/sorteo/editarSorteo/${sorteo._id}`, formData, {
+      .put(`/sorteo/editarSorteo/${sorteo._id}/editar`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `bearer ${token}`,

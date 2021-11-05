@@ -56,19 +56,10 @@ export default function GeneradorNumeros({sorteoFinal, setSorteoFinal}) {
                     <Box display='flex'>
                         <Box p={2} sx={{ flexGrow: 1 }}>
                             <Typography variant='h5'>
-                                <b>Información de Sorteo</b>
+                                <b>Generador de boletos</b>
                             </Typography>
                         </Box>
-                        <Box p={2}>
-                            <Button
-                                variant='outlined'
-                                color='primary'
-                                size='large'
-                                onClick={()=> GenerarNumeros()}
-                            >
-                                Generar
-                            </Button>
-                        </Box>
+                        
                     </Box>
                 </Grid>
 
@@ -97,7 +88,7 @@ export default function GeneradorNumeros({sorteoFinal, setSorteoFinal}) {
                                 size="small"
                                 type='number'
                                 name="numero_inicial"
-                                value={cifrasBoletos.numero_inicial ? cifrasBoletos.numero_inicial : ''}
+                                value={cifrasBoletos.numero_inicial || cifrasBoletos.numero_inicial === 0  ? cifrasBoletos.numero_inicial : ''}
                                 variant="outlined"
                                 onChange={obtenerCampos}
                             />
@@ -116,13 +107,26 @@ export default function GeneradorNumeros({sorteoFinal, setSorteoFinal}) {
                                 onChange={obtenerCampos}
                             />
                         </Box>
+                        <Box width="100%" p={1}>
+                            <Typography>
+                                Numero final:
+                            </Typography>
+                            <Button
+                                variant='outlined'
+                                color='primary'
+                                size='large'
+                                onClick={()=> GenerarNumeros()}
+                            >
+                                Generar
+                            </Button>
+                        </Box>
                     </div>
                 </Box>
                 <Grid container lg={12}>
                     {
-                        sorteoFinal?.boletos?.map((element) => {
+                        sorteoFinal?.boletos?.map((element,index) => {
                             return(
-                                <Box p={1}>
+                                <Box key={index} p={1}>
                                     <Paper elevantion={3}>
                                         <Box p={1}>
                                             <b>{element.numero_boleto}</b>

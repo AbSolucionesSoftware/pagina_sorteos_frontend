@@ -38,76 +38,59 @@ function TabPanel(props) {
     value: PropTypes.number.isRequired,
   };
   
-  function a11yProps(index) {
-    return {
-      id: `simple-tab-${index}`,
-      'aria-controls': `simple-tabpanel-${index}`,
-    };
-  }
-  
 
-export default function GenerarSorteo({loading, setLoading}) {
+export default function GenerarSorteo({loading, setLoading, setRefreash, refreash }) {
+
 	const { setAlert } = useContext(AdminContext);
     const [ open, setOpen ] = useState(false);
-    const [ preview, setPreview ] = useState('');
+    
     const [ dataImagen, setDataImagen ]= useState([]);
-    const [ value, setValue ] = React.useState(0);
-    const [ recargar, setRecargar ] = useState(false);
     const token = localStorage.getItem('token');
-    const [ sorteoFinal, setSorteoFinal ] = useState([])
-
-  if (recargar)
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" height="30vh">
-        <CircularProgress />
-      </Box>
-    );
-
-    const handleChange = (event, newValue) => {
-      setValue(newValue);
-    };
+    const [ sorteoFinal, setSorteoFinal ] = useState({});
 
     const handleDrawerOpen = () => {
-      // setSorteoFinal([]);
       setOpen(!open);
     };
 
-    const enviarDatos = async () => {
-      setRecargar(true);
-      const formData = new FormData();
-      formData.append( "nombre_sorteo", sorteoFinal.nombre_sorteo);
-      formData.append( "fecha_sorteo", sorteoFinal.fecha_sorteo);
-      formData.append( "lista_premios", JSON.stringify(sorteoFinal.lista_premios));
-      formData.append( "boletos",  JSON.stringify(sorteoFinal.boletos));
-      formData.append( "precio_boleto", sorteoFinal.precio_boleto);
-      if (dataImagen.imagen) {
-        formData.append("imagen", dataImagen.imagen);
-      }
 
-      await clienteAxios
-      .post(`/sorteo/crearSorteo/`, formData, 
-      {headers: 
-        {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `bearer ${token}`
+    const enviarDatos = async () => {
+      if(!sorteoFinal.nombre_sorteo || !sorteoFinal.fecha_sorteo || !sorteoFinal.precio_boleto || !sorteoFinal.boletos){
+        setAlert({ message: 'Datos inconpletos', status: 'error', open: true });
+      }else{
+        if(sorteoFinal.boletos) if(sorteoFinal.boletos.length === 0) return
+        const formData = new FormData();
+        formData.append( "nombre_sorteo", sorteoFinal.nombre_sorteo);
+        formData.append( "fecha_sorteo", sorteoFinal.fecha_sorteo);
+        formData.append( "boletos",  JSON.stringify(sorteoFinal.boletos));
+        formData.append( "precio_boleto", sorteoFinal.precio_boleto);
+        if (dataImagen.imagen) {
+          formData.append("imagen", dataImagen.imagen);
         }
-      })
-      .then((res) => {
-        console.log(res.data);
         setLoading(true);
-        setRecargar(false); 
-        setSorteoFinal([]);
-        setAlert({ message: 'Sorteo creado con exito!', status: 'success', open: true });
-        handleDrawerOpen();
-      })
-      .catch((err) => {
-        console.log(err)
-        setLoading(true);
-        setSorteoFinal([]);
-        setRecargar(false);
-        setAlert({ message: 'Ocurrio un problema en el servidor', status: 'error', open: true });
-        handleDrawerOpen();
-      });
+        await clienteAxios
+        .post(`/sorteo/crearSorteo/`, formData, 
+        {headers: 
+          {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `bearer ${token}`
+          }
+        })
+        .then((res) => {
+          setSorteoFinal([]);
+          setAlert({ message: 'Sorteo creado con exito!', status: 'success', open: true });
+          setRefreash(!refreash);
+          setLoading(!loading);
+          handleDrawerOpen();
+        })
+        .catch((err) => {
+          console.log(err)
+          setLoading(!loading);
+          setSorteoFinal([]);
+          setAlert({ message: 'Ocurrio un problema en el servidor', status: 'error', open: true });
+          handleDrawerOpen();
+        });
+      }
+      
   };
 
   return (
@@ -132,28 +115,14 @@ export default function GenerarSorteo({loading, setLoading}) {
             onClose={handleDrawerOpen}
             aria-describedby="alert-dialog-slide-description"
         >
-          <AppBar position="static" color="default" elevation={0}>
-            <Box display="flex" justifyContent="space-between">
-              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                  <Tab label="Informacion Sorteo" {...a11yProps(0)} />
-                  <Tab label="Generar Numeros" {...a11yProps(1)} />
-              </Tabs> 
-            </Box>
-          </AppBar>
           <DialogContent>
-              <TabPanel value={value} index={0}>
                 <FormularioSorteo 
                   sorteoFinal={sorteoFinal} 
                   setSorteoFinal={setSorteoFinal}  
-                  preview={preview} 
-                  setPreview={setPreview} 
                   dataImagen={dataImagen}
                   setDataImagen={setDataImagen}
                 />
-              </TabPanel>
-              <TabPanel value={value} index={1}>
                 <GeneradorNumeros sorteoFinal={sorteoFinal} setSorteoFinal={setSorteoFinal} />
-              </TabPanel>
           </DialogContent>
           <DialogActions>
               <Button color='primary' variant='contained' onClick={handleDrawerOpen}>Cancelar</Button>

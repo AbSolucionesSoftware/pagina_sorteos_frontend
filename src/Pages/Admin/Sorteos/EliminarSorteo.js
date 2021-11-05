@@ -4,7 +4,7 @@ import React, { useContext, useState } from 'react'
 import clienteAxios from '../../../Config/axios';
 import { AdminContext } from '../../../Context/AdminContext';
 
-export default function EliminarSorteo({sorteo, loading, setLoading}) {
+export default function EliminarSorteo({sorteo, loading, setLoading, setRefreash, refreash, setPreview}) {
 	const { setAlert } = useContext(AdminContext);
 
     const [open, setOpen] = useState(false);
@@ -16,12 +16,14 @@ export default function EliminarSorteo({sorteo, loading, setLoading}) {
         await clienteAxios
         .put(`/sorteo/activeSorteo/${sorteo._id}`,{sorteo_activo: false })
         .then((res) => {
-            setAlert(res.data.message);
-            setLoading(false);
+            setAlert({ message: 'Sorteo desactivado', status: 'success', open: true });
+            setRefreash(!refreash);
+            setLoading(!loading);
+            setPreview("");
         })
         .catch((err) => {
-            setLoading(false);
-            setAlert(err.message)
+            setLoading(!loading);
+            setAlert({ message: 'Ocurrio un problema en el servidor', status: 'error', open: true });
         });
     };
 
@@ -45,7 +47,7 @@ export default function EliminarSorteo({sorteo, loading, setLoading}) {
 						Cancelar
 					</Button>
 					<Button color="primary" autoFocus variant="contained" onClick={() => desactivarSorteo()}>
-						Eliminar
+						Desactivar
 					</Button>
 				</DialogActions>
 			</Dialog>

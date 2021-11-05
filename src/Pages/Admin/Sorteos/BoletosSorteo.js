@@ -1,7 +1,7 @@
 import { AppBar, Button, CircularProgress, Grid, IconButton, InputBase, Paper, Slide, TextField, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import { Dialog, DialogActions, DialogContent } from '@mui/material';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import clienteAxios from '../../../Config/axios';
 import { AdminContext } from '../../../Context/AdminContext';
@@ -12,16 +12,19 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function BoletosSorteo({sorteo, loading, setLoading}) {
-	const { setAlert, alert } = useContext(AdminContext);
-
+	
+    const { setAlert, alert } = useContext(AdminContext);
     const [ open, setOpen ] = useState(false);
     const [infoBoleto, setInfoBoleto] = useState([]);
+
+    const [boletosActuales, setBoletosActuales] = useState([]);
+    const [ openBoleto, setOpenBoleto ] = useState(false);
+
 
     const handleDrawerOpen = () => {
         setOpen(!open);
     };
 
-    const [ openBoleto, setOpenBoleto ] = useState(false);
 
     const handleDrawerOpenBoleto = () => {
         setOpenBoleto(!openBoleto);
@@ -31,28 +34,42 @@ export default function BoletosSorteo({sorteo, loading, setLoading}) {
         setInfoBoleto({...infoBoleto, [e.target.name]: e.target.value})
     }
 
-    const comprarBoleto = async () => {
-        setLoading(true);
-        await clienteAxios
-        .put(`/sorteo/comprarBoletoSorteo/${infoBoleto._id}`, infoBoleto)
-        .then((res) => {
-            handleDrawerOpenBoleto();
-            setLoading(true);
-            setAlert(res.data.message);
-            setLoading(false);
-        })
-        .catch((err) => {
-            setLoading(false);
-            setAlert(err.message)
-        });
+    const comprarBoleto = async (e) => {
+        if(!infoBoleto.numero_boleto || !infoBoleto.nombres || !infoBoleto.apellidos || !infoBoleto.telefono || !infoBoleto.estado ){
+            setAlert({ message: 'Datos inconcompletos', status: 'error', open: true });
+        }else{
+            await clienteAxios
+            .put(`/sorteo/comprarBoletoSorteo/${infoBoleto._id}`, infoBoleto)
+            .then((res) => {
+                handleDrawerOpenBoleto();
+                setLoading(!loading);
+                setAlert({ message: 'Numero agregado', status: 'success', open: true });
+            })
+            .catch((err) => {
+                setLoading(!loading);
+                setAlert({ message: 'Ocurrio un problema en el servidor', status: 'error', open: true });
+            });
+        }
+
     };
 
-    if (loading)
-	return (
-		<Box display="flex" justifyContent="center" alignItems="center" height="30vh">
-			<CircularProgress />
-		</Box>
-	);
+    const buscarBoletos = (e) => {
+        if(e.target.value === ''){
+            setBoletosActuales(sorteo.boletos);
+        }else{
+            console.log(e.target.value);
+            const data = sorteo.boletos.filter((b) => b.numero_boleto.indexOf(e.target.value) > -1);
+            setBoletosActuales(data);
+        }
+        
+    }
+
+    useEffect(() => {
+        if(sorteo){
+            console.log("entro");
+            setBoletosActuales(sorteo.boletos);
+        }
+    }, [sorteo])
     
     return (
         <>
@@ -92,8 +109,9 @@ export default function BoletosSorteo({sorteo, loading, setLoading}) {
                                 sx={{ ml: 1, flex: 1 }}
                                 placeholder="Buscar boleto"
                                 inputProps={{ 'aria-label': 'busca tu boleto' }}
+                                onChange={(e) => buscarBoletos(e)}
                             />
-                            <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+                            <IconButton sx={{ p: '10px' }} aria-label="search">
                                 <SearchIcon />
                             </IconButton>
                         </Paper>
@@ -103,10 +121,10 @@ export default function BoletosSorteo({sorteo, loading, setLoading}) {
               <DialogContent>
                 <Grid container>
                     {
-                        sorteo?.boletos?.map((element, index) => {
+                        boletosActuales?.map((element, index) => {
                             return(
                                 <Box 
-                                key={index}
+                                    key={index}
                                     p={1}
                                     onClick={() => {
                                         handleDrawerOpenBoleto()
@@ -125,7 +143,7 @@ export default function BoletosSorteo({sorteo, loading, setLoading}) {
                 </Grid>
               </DialogContent>
               <DialogActions>
-                  <Button color='error' variant='contained' onClick={handleDrawerOpen}>Cerrar</Button>
+                  <Button color='error' variant='contained' onClick={() => handleDrawerOpen()}>Cerrar</Button>
               </DialogActions>
           </Dialog>
 
@@ -153,7 +171,7 @@ export default function BoletosSorteo({sorteo, loading, setLoading}) {
                             </Typography>
                         </Box>
                         <Box display="flex" width="100%" p={1}>
-                            <Typography variant="h6">
+                            <Typography variant="h6" p={1}>
                                 <b>Nombres: </b> 
                             </Typography>
                             <TextField
@@ -218,7 +236,7 @@ export default function BoletosSorteo({sorteo, loading, setLoading}) {
                     <Button color='error' variant='contained' onClick={handleDrawerOpenBoleto}>Cerrar</Button>
                     {
                         infoBoleto.vendido === false ? (
-                            <Button color='primary' variant='contained' onClick={comprarBoleto}>Registrar</Button>
+                            <Button color='primary' variant='contained' onClick={() => comprarBoleto()}>Registrar</Button>
                         ):(null)
                     }
                 </DialogActions>

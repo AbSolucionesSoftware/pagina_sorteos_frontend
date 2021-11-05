@@ -1,10 +1,11 @@
-import { Accordion, AccordionDetails, AccordionSummary, Grid,  Container, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Grid,  Container, Typography, CircularProgress } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import BoletosSorteo from '../BoletosSorteo';
 import React, { useEffect, useState } from 'react'
 import clienteAxios from '../../../../Config/axios';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { makeStyles } from '@material-ui/styles';
+import BoletosEliminados from './BoletosEliminados';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +31,7 @@ export default function SorteosEliminados() {
     /* const handleModal = () => setOpenModal(!openModal); */
 
     const traerSorteoActivo = async () => {
+        setLoading(true);
         await clienteAxios
             .get(`/sorteo/getSorteosEliminados`)
             .then((res) => {
@@ -42,10 +44,22 @@ export default function SorteosEliminados() {
     };
 
     useEffect(() => {
+        console.log("entro elim");
         traerSorteoActivo();
-    }, [loading]);
+    }, []);
 
-    console.log(sorteo)
+    if (loading)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="30vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
+
 
     return (
         <>
@@ -55,7 +69,7 @@ export default function SorteosEliminados() {
                         sorteo?.map((sorteo, index) =>{
                             return(
                                 <Box p={1}>
-                                    <Accordion key={index} expanded={expanded === index} onChange={handleChange(index)}>
+                                    <Accordion key={index} expanded={expanded === index} onChange={handleChange(index)} >
                                         <AccordionSummary
                                             expandIcon={<ExpandMoreIcon />}
                                             aria-controls="panel1bh-content"
@@ -87,7 +101,7 @@ export default function SorteosEliminados() {
                                                     </Box>
                                                 </div>
                                                 <Box>
-                                                    <BoletosSorteo sorteo={sorteo} /> 
+                                                    <BoletosEliminados boletos={sorteo.boletos} /> 
                                                 </Box>
                                             </Grid>
                                         </AccordionDetails>

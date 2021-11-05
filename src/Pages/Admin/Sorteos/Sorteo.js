@@ -1,10 +1,8 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
-  Button,
   CircularProgress,
   Container,
   Grid,
-  Paper,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -59,6 +57,8 @@ export default function SorteoAdministrador() {
 
   const classes = useStyles();
 
+  const [refreash, setRefreash] = useState(false);
+
   const [loading, setLoading] = useState(false);
   const [sorteo, setSorteo] = useState([]);
   const [preview, setPreview] = useState("");
@@ -77,7 +77,7 @@ export default function SorteoAdministrador() {
       });
   };
 
-  console.log(sorteo);
+  // console.log(sorteo);
 
   const onDrop = useCallback(
     (files) => {
@@ -99,7 +99,7 @@ export default function SorteoAdministrador() {
 
   useEffect(() => {
     traerSorteoActivo();
-  }, [loading]);
+  }, [refreash]);
 
   const obtenerCampos = (e) => {
     setSorteo({ ...sorteo, [e.target.name]: e.target.value });
@@ -120,10 +120,10 @@ export default function SorteoAdministrador() {
   return (
     <Container>
       <SnackBarMessages alert={alert} setAlert={setAlert} />
-
+      
       {sorteo ? null : (
         <Box display="flex" justifyContent="flex-end">
-          <GenerarSorteo loading={loading} setLoading={setLoading} />
+          <GenerarSorteo loading={loading} setLoading={setLoading} setRefreash={setRefreash} refreash={refreash} />
         </Box>
       )}
       <Grid container>
@@ -136,6 +136,9 @@ export default function SorteoAdministrador() {
                     sorteo={sorteo}
                     loading={loading}
                     setLoading={setLoading}
+                    setRefreash={setRefreash} 
+                    refreash={refreash}
+                    setPreview={setPreview}
                   />
                 </Box>
               )}
@@ -231,29 +234,38 @@ export default function SorteoAdministrador() {
                 </Box>
                 </div>
               </div>
+              <Box display="flex" justifyContent="flex-end">
+                {!sorteo ? null : (
+                  <Box p={1}>
+                    <EditarSorteo sorteo={sorteo} dataImagen={dataImagen} />
+                  </Box>
+                )}
+              </Box>
               <Box p={4}>
                 <Divider>PREMIOS</Divider>
               </Box>
               <div>
                   <Box display="flex" >
-                    <Box width="100%" p={1}>
-                      <CardPremio id={1} />
-                    </Box>
-                    <Box width="100%" p={1}>
-                      <CardPremio id={2} />
-                    </Box>
-                    <Box width="100%" p={1}>
-                      <CardPremio id={3} />
-                    </Box>
+                    {sorteo?.lista_premios?.premio_uno ? (
+                      <Box width="100%" p={1}>
+                        <CardPremio id={1} sorteo={sorteo} premio={sorteo.lista_premios.premio_uno} sSetLoading={setLoading} sloading={loading} />
+                      </Box>
+                    ) : null}
+                    
+                    {sorteo?.lista_premios?.premio_dos ? (
+                      <Box width="100%" p={1}>
+                        <CardPremio id={2} sorteo={sorteo} premio={sorteo.lista_premios.premio_dos} sSetLoading={setLoading} sloading={loading} />
+                      </Box>
+                    ) : null}
+                    
+                    {sorteo?.lista_premios?.premio_tres ? (
+                      <Box width="100%" p={1}>
+                        <CardPremio id={3} sorteo={sorteo} premio={sorteo.lista_premios.premio_tres} sSetLoading={setLoading} sloading={loading} />
+                      </Box>
+                    ): null}
+                    
                   </Box>
               </div>
-            </Box>
-            <Box display="flex" justifyContent="flex-end">
-              {!sorteo ? null : (
-                <Box p={1}>
-                  <EditarSorteo sorteo={sorteo} dataImagen={dataImagen} />
-                </Box>
-              )}
             </Box>
           </Box>
         </Grid>
