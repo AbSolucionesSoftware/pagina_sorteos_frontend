@@ -44,7 +44,7 @@ export default function ComprarBoletos({sorteo}) {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogContent>
-            <FormularioDatos sorteo={sorteo} />
+            <FormularioDatos sorteo={sorteo} handleClose={handleClose} />
         </DialogContent>
         <DialogActions sx={{justifyContent: 'center'}}>
           <Button onClick={handleClose} startIcon={<Close />}>Cancelar</Button>

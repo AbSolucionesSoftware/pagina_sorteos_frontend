@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, CircularProgress, Dialog, AppBar, DialogActions, DialogContent, Slide, Tab, Tabs } from '@material-ui/core';
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, Slide } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import FormularioSorteo from './FormularioSorteo';  
 import GeneradorNumeros from './GeneradorNumeros';
@@ -45,7 +45,7 @@ export default function GenerarSorteo({loading, setLoading, setRefreash, refreas
     const [ open, setOpen ] = useState(false);
     
     const [ dataImagen, setDataImagen ]= useState([]);
-    const [ value, setValue ] = React.useState(0);
+    /* const [ value, setValue ] = React.useState(0); */
     const [ recargar, setRecargar ] = useState(false);
     const token = localStorage.getItem('tokenSorteos');
     const [ sorteoFinal, setSorteoFinal ] = useState([])
@@ -57,9 +57,9 @@ export default function GenerarSorteo({loading, setLoading, setRefreash, refreas
       </Box>
     );
 
-    const handleChange = (event, newValue) => {
+    /* const handleChange = (event, newValue) => {
       setValue(newValue);
-    };
+    }; */
 
     const handleDrawerOpen = () => {
       setOpen(!open);

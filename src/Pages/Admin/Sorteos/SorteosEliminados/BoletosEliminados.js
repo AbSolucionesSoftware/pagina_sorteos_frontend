@@ -1,8 +1,7 @@
-import { AppBar, Button, CircularProgress, Grid, IconButton, InputBase, Paper, Slide, TextField, Typography } from '@material-ui/core';
+import { AppBar, Button, Grid, Paper, Slide, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import { Dialog, DialogActions, DialogContent } from '@mui/material';
-import React, { useContext, useState, useEffect } from 'react';
-import SearchIcon from '@material-ui/icons/Search';
+import React, { useContext, useState } from 'react';
 import { AdminContext } from '../../../../Context/AdminContext';
 import SnackBarMessages from '../../../../Components/SnackBarMessages';
 
@@ -14,10 +13,10 @@ export default function BoletosEliminados({boletos}) {
     
     const { setAlert, alert } = useContext(AdminContext);
     const [ open, setOpen ] = useState(false);
-    const [infoBoleto, setInfoBoleto] = useState([]);
+    /* const [infoBoleto, setInfoBoleto] = useState([]);
 
     const [boletosActuales, setBoletosActuales] = useState([]);
-    const [ openBoleto, setOpenBoleto ] = useState(false);
+    const [ openBoleto, setOpenBoleto ] = useState(false); */
 
 
     const handleDrawerOpen = () => {

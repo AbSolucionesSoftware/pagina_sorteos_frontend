@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Divider, IconButton, Grid, Paper, TextField, Typography, Button } from '@material-ui/core';
+import React, { useCallback, useState } from 'react';
+import { Divider, Grid, Paper, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Box } from '@material-ui/system';
 import { useDropzone } from 'react-dropzone';

@@ -12,6 +12,8 @@ export default function VideosDeGanadores() {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const chevronWidth = 40;
 
+  if(datos.videos_ganadores && datos.videos_ganadores.length === 0) return null
+
   return (
     <Fragment>
       <Container maxWidth="lg" sx={{ my: 5 }}>

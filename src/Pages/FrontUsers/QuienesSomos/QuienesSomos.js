@@ -4,6 +4,8 @@ import { PaginaContext } from "../../../Context/PaginaContext";
 
 export default function QuienesSomos() {
   const { datos } = React.useContext(PaginaContext);
+
+  if(!datos.quienes_somos) return null
   return (
     <Fragment>
       <Container maxWidth="lg">

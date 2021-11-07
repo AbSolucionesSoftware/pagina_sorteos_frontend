@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import routes from "./Config/routes";
 import { Helmet } from "react-helmet";
+import { PaginaProvider } from "./Context/PaginaContext";
 
 function App() {
   return (
@@ -10,13 +11,16 @@ function App() {
         <meta charSet="utf-8" />
         <title>Sorteos y Rifas de la Suerte</title>
       </Helmet>
-      <Router>
+      <PaginaProvider>
+        <Router>
         <Switch>
           {routes.map((route, index) => (
             <RoutesWithSubRoutes key={index} {...route} />
           ))}
         </Switch>
       </Router>
+      </PaginaProvider>
+      
     </div>
   );
 }

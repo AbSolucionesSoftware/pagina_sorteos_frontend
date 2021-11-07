@@ -16,6 +16,8 @@ export default function Preguntas() {
     setExpanded(isExpanded ? panel : false);
   };
 
+  if(datos.preguntas && datos.preguntas.length === 0) return null
+
   return (
     <Container maxWidth="md" id="preguntas">
       <Box mt={5} mb={3} textAlign="center">

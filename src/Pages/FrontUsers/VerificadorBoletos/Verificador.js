@@ -1,4 +1,4 @@
-import {
+/* import {
   Avatar,
   Box,
   Chip,
@@ -7,19 +7,18 @@ import {
   DialogActions,
   DialogContent,
   Grid,
-  Paper,
   Slide,
   TextField,
   Typography,
   Container,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
-import React, { useState } from "react";
-import { PaginaContext } from "../../../Context/PaginaContext";
+import { makeStyles } from "@material-ui/styles"; */
+import React/* , { useState } */ from "react";
+/* import { PaginaContext } from "../../../Context/PaginaContext";
 import clienteAxios from "../../../Config/axios";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; */
 import Error404 from "../Error";
-
+/* 
 const useStyles = makeStyles((theme) => ({
   image: {
     maxHeight: "100%",
@@ -40,13 +39,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
-});
+}); */
 
 export default function Verificador() {
-  const { datos } = React.useContext(PaginaContext);
+ /*  const { datos } = React.useContext(PaginaContext);
   const classes = useStyles();
-  const [verBoleto, setVerBoleto] = useState([]);
-  const [numeroBoleto, setNumeroBoleto] = useState("");
+  /* const [verBoleto, setVerBoleto] = useState([]); */
+/*   const [numeroBoleto, setNumeroBoleto] = useState("");
   const [open, setOpen] = useState(false);
 
   const traerDatos = async (e) => {
@@ -55,10 +54,10 @@ export default function Verificador() {
       .post(`/sorteo/buscarBoleto/${datos._id}`, numeroBoleto)
       .then((res) => {
           console.log(res);
-        /* setVerBoleto(res.data[0]);
+        setVerBoleto(res.data[0]);
         if (res.data[0]) {
           handleDrawerOpenBoleto();
-        } */
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -71,13 +70,13 @@ export default function Verificador() {
 
   const handleDrawerOpenBoleto = () => {
     setOpen(!open);
-  };
+  }; */
 
   return (
     <Error404 />
   )
 
-  return (
+  /* return (
     <Box>
       <Container maxWidth="xs" sx={{ mt: 10 }}>
         <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -180,5 +179,5 @@ export default function Verificador() {
         </DialogActions>
       </Dialog>
     </Box>
-  );
+  ); */
 }

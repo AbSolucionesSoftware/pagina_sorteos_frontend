@@ -8,12 +8,14 @@ const BgElement = Element.BgElement;
 
 export default function BannerPromocional() {
   const [videos, setVideos] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
   const traerDatos = async () => {
     await clienteAxios
       .get(`/bannerAdmin/banner-company`)
       .then((res) => {
         setVideos(res.data.bannersComapny);
+        setLoaded(true);
       })
       .catch((err) => {
         console.log(err);
@@ -24,10 +26,12 @@ export default function BannerPromocional() {
     traerDatos();
   }, []);
 
+  if(loaded && videos.length === 0) return null
+
   return (
     <Fragment>
       <BannerAnim autoPlay prefixCls="banner-user" delay={200}>
-        {videos?.map((video, index) => {
+        {videos.map((video, index) => {
           return (
             <Element
               key={index}

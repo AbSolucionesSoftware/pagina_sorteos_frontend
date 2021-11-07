@@ -1,6 +1,5 @@
 import { Accordion, AccordionDetails, AccordionSummary, Grid,  Container, Typography, CircularProgress } from '@material-ui/core';
 import { Box } from '@material-ui/system';
-import BoletosSorteo from '../BoletosSorteo';
 import React, { useEffect, useState } from 'react'
 import clienteAxios from '../../../../Config/axios';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';

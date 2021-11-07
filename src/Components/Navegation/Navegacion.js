@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import {
   Avatar,
   Box,
@@ -16,20 +16,12 @@ import {
 import DehazeIcon from "@material-ui/icons/Dehaze";
 import useStyles from "./Styles";
 import { Link } from "react-router-dom";
-import clienteAxios from "../../Config/axios";
 import { PaginaContext } from "../../Context/PaginaContext";
 import AccountMenu from "./AccountMenu";
-import { Verified } from "@mui/icons-material";
 import { Home, Money, QuestionAnswer } from "@material-ui/icons";
 
 export default function Navegacion() {
-  const {
-    datos,
-    setDatos,
-    reload,
-    setReload,
-    setDatosSorteo,
-  } = React.useContext(PaginaContext);
+  const { datos, datosSorteo } = React.useContext(PaginaContext);
   const classes = useStyles();
   const [openDrawer, setOpenDrawer] = useState(false);
   const user = JSON.parse(localStorage.getItem("userSorteos"));
@@ -38,34 +30,6 @@ export default function Navegacion() {
   const handleOpen = () => {
     setOpenDrawer(!openDrawer);
   };
-
-  const traerDatos = async () => {
-    await clienteAxios
-      .get(`/empresa/empresaSorteo`)
-      .then((res) => {
-        setDatos(res.data.empresa);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const traerSorteoActivo = async () => {
-    await clienteAxios
-      .get(`/sorteo/getSorteoActivo`)
-      .then((res) => {
-        setDatosSorteo(res.data.sorteo);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    traerSorteoActivo();
-    traerDatos();
-    setReload(false);
-  }, [reload]);
 
   if (!datos) return null;
 
@@ -120,19 +84,22 @@ export default function Navegacion() {
         >
           Inicio
         </Button>
-        <Button
-          color="inherit"
-          sx={{ textTransform: "none", fontSize: 17, mx: 1 }}
-          component={Link}
-          to={`/`}
-          onClick={() =>
-            setTimeout(() => {
-              window.scrollTo(0, 2000);
-            }, 200)
-          }
-        >
-          Preguntas Frecuentes
-        </Button>
+        {datos.preguntas && datos.preguntas.length > 0 ? (
+          <Button
+            color="inherit"
+            sx={{ textTransform: "none", fontSize: 17, mx: 1 }}
+            component={Link}
+            to={`/`}
+            onClick={() =>
+              setTimeout(() => {
+                window.scrollTo(0, 2000);
+              }, 200)
+            }
+          >
+            Preguntas Frecuentes
+          </Button>
+        ) : null}
+
         {/* <Button
           color="inherit"
           sx={{ textTransform: "none", fontSize: 17, mx: 1 }}
@@ -141,19 +108,22 @@ export default function Navegacion() {
         >
           Verificar Boleto
         </Button> */}
-        <Button
-          color="inherit"
-          sx={{ textTransform: "none", fontSize: 17, mx: 1 }}
-          component={Link}
-          to={`/sorteos/boletos`}
-          onClick={() =>
-            setTimeout(() => {
-              window.scrollTo(0, 0);
-            }, 200)
-          }
-        >
-          Comprar Boleto
-        </Button>
+        {datosSorteo ? (
+          <Button
+            color="inherit"
+            sx={{ textTransform: "none", fontSize: 17, mx: 1 }}
+            component={Link}
+            to={`/sorteos/boletos`}
+            onClick={() =>
+              setTimeout(() => {
+                window.scrollTo(0, 0);
+              }, 200)
+            }
+          >
+            Comprar Boleto
+          </Button>
+        ) : null}
+
         {token !== null && user !== null ? <AccountMenu /> : null}
       </Box>
 
@@ -171,48 +141,61 @@ export default function Navegacion() {
           </Box>
           <List>
             <ListItem disablePadding>
-              <ListItemButton component={Link} to={`/`} onClick={() => {
-                handleOpen();
-                setTimeout(() => {
-                  window.scrollTo(0, 0);
-                }, 200)
-              }}>
+              <ListItemButton
+                component={Link}
+                to={`/`}
+                onClick={() => {
+                  handleOpen();
+                  setTimeout(() => {
+                    window.scrollTo(0, 0);
+                  }, 200);
+                }}
+              >
                 <ListItemIcon>
                   <Home />
                 </ListItemIcon>
                 <ListItemText primary="Inicio" />
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton component={Link} to={`/`} onClick={() => {
-                handleOpen();
-                setTimeout(() => {
-                  window.scrollTo(0, 2000);
-                }, 200)
-              }}>
-                <ListItemIcon>
-                  <QuestionAnswer />
-                </ListItemIcon>
-                <ListItemText primary="Preguntas Frecuentes" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton
-                component={Link}
-                to={`/sorteos/boletos`}
-                onClick={() => {
-                  handleOpen();
-                  setTimeout(() => {
-                    window.scrollTo(0, 0);
-                  }, 200)
-                }}
-              >
-                <ListItemIcon>
-                  <Money />
-                </ListItemIcon>
-                <ListItemText primary="Comprar Boleto" />
-              </ListItemButton>
-            </ListItem>
+            {datos.preguntas && datos.preguntas.length > 0 ? (
+              <ListItem disablePadding>
+                <ListItemButton
+                  component={Link}
+                  to={`/`}
+                  onClick={() => {
+                    handleOpen();
+                    setTimeout(() => {
+                      window.scrollTo(0, 2000);
+                    }, 200);
+                  }}
+                >
+                  <ListItemIcon>
+                    <QuestionAnswer />
+                  </ListItemIcon>
+                  <ListItemText primary="Preguntas Frecuentes" />
+                </ListItemButton>
+              </ListItem>
+            ) : null}
+            {datosSorteo ? (
+              <ListItem disablePadding>
+                <ListItemButton
+                  component={Link}
+                  to={`/sorteos/boletos`}
+                  onClick={() => {
+                    handleOpen();
+                    setTimeout(() => {
+                      window.scrollTo(0, 0);
+                    }, 200);
+                  }}
+                >
+                  <ListItemIcon>
+                    <Money />
+                  </ListItemIcon>
+                  <ListItemText primary="Comprar Boleto" />
+                </ListItemButton>
+              </ListItem>
+            ) : null}
+
             {/* <ListItem disablePadding>
               <ListItemButton
                 component={Link}

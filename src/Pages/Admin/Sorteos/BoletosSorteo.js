@@ -1,4 +1,4 @@
-import { AppBar, Button, CircularProgress, Grid, IconButton, InputBase, Paper, Slide, TextField, Typography } from '@material-ui/core';
+import { AppBar, Button, Grid, IconButton, InputBase, Paper, Slide, TextField, Typography } from '@material-ui/core';
 import { Box } from '@material-ui/system';
 import { Dialog, DialogActions, DialogContent } from '@mui/material';
 import React, { useContext, useState, useEffect } from 'react';

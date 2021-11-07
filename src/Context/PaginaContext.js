@@ -5,9 +5,11 @@ export const PaginaContext = createContext();
 export const PaginaProvider = ({ children }) => {
 
     const [ datos, setDatos ] = useState([]);
-    const [ datosSorteo, setDatosSorteo ] = useState([]);
+    const [ datosSorteo, setDatosSorteo ] = useState();
     const [ reload, setReload ] = useState(false);
     const [ boletos_seleccionados, setBoletosSeleccionados ] = useState([])
+    const [ loadingSorteo, setLoadingsorteo ] = useState(false);
+    const [ finalizado, setFinalizado ] = useState(false);
 
 	return (
 		<PaginaContext.Provider value={
@@ -19,7 +21,9 @@ export const PaginaProvider = ({ children }) => {
                 datosSorteo, 
                 setDatosSorteo,
                 boletos_seleccionados, 
-                setBoletosSeleccionados
+                setBoletosSeleccionados,
+                loadingSorteo, setLoadingsorteo,
+                finalizado, setFinalizado
             }
         }>
 			{children}

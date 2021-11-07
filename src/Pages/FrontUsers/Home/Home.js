@@ -48,7 +48,9 @@ export default function Home() {
           </Parallax>
         </Box>
       )}
-      {datos?.videos_ganadores?.length === 0 ? null : <VideosDeGanadores />}
+      <Box my={2}>
+        {datos?.videos_ganadores?.length === 0 ? null : <VideosDeGanadores />}
+      </Box>
     </Fragment>
   );
 }

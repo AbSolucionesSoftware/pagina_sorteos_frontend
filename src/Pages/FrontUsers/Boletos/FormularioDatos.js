@@ -11,7 +11,7 @@ import { withRouter } from "react-router";
 import PagoPayPal from "./pago_paypal"
 import { PaginaContext } from "../../../Context/PaginaContext";
 
-function FormularioDatos({sorteo}) {
+function FormularioDatos({sorteo, handleClose}) {
 
   const [datosBoleto, setDatosBoleto] = useState([]);
   const { boletos_seleccionados } = React.useContext(PaginaContext);
@@ -102,7 +102,7 @@ let order = {
         margin="dense"
       />
       <Box sx={{display: "flex", justifyContent: "center", my: 2}}>
-        <PagoPayPal order={order} datosBoleto={datosBoleto} setAlert={setAlert} />
+        <PagoPayPal order={order} datosBoleto={datosBoleto} setAlert={setAlert} handleClose={handleClose} />
       </Box>
       </Container>
       
