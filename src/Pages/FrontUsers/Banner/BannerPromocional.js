@@ -37,15 +37,20 @@ export default function BannerPromocional() {
               key={index}
               prefixCls="banner-user-elem"
               className="banner-user-elem"
+              style={{
+                backgroundImage: `url(${video.imgBannerAdminUrl})`,
+              }}
             >
               <BgElement
                 key="bg"
                 className="bg banner-elemento"
-                alt="img-oferta"
-                style={{
+                
+                /* style={{
                   backgroundImage: `url(${video.imgBannerAdminUrl})`,
-                }}
-              ></BgElement>
+                }} */
+              >
+                <img alt="img-oferta" src={video.imgBannerAdminUrl} className="img-banner" />
+              </BgElement>
             </Element>
           );
         })}

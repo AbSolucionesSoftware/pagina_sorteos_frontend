@@ -1,23 +1,32 @@
 /* For demo */
 .banner-user{
-  height: 100vh;
+  height: 92vh;
   width: 100%!important;
 }
 .banner-user-elem{
+  height: 100%;
+  
+}
+.banner-elemento{
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.521)!important;
+  backdrop-filter: blur(2px);
 }
-.banner-elemento{
-  width: 100%!important;
-  height: 100%!important;
-  background-size: cover;
-  background-repeat: no-repeat;
-  
+
+.img-banner{
+  max-width: 120%!important;
+  max-height: 120%!important;
 }
 @media(max-width: 900px){
   .banner-user{
-    height: 60vh!important;
+    height: 30vh!important;
+  }
+  .img-banner{
+    max-width: 120%!important;
+    max-height: 120%!important;
   }
 }
 .search-nav .ant-input-wrapper{

@@ -13,7 +13,7 @@ export default function Home() {
   const { datos } = React.useContext(PaginaContext);
   return (
     <Fragment>
-      <Box>
+      <Box mt={7}>
         <BannerPromocional />
       </Box>
       <Box
