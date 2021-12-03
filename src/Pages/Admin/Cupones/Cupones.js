@@ -13,8 +13,11 @@ import SnackBarMessages from "../../../Components/SnackBarMessages";
 import { AdminContext } from "../../../Context/AdminContext";
 import clienteAxios from "../../../Config/axios";
 import { Box } from "@material-ui/system";
-import { borderRadius } from "@mui/system";
-import { green } from "@mui/material/colors";
+
+import moment from "moment";
+import 'moment/locale/es';
+
+moment.locale('es');
 
 
 function createData(name, calories, fat, carbs, protein) {
@@ -33,6 +36,8 @@ export default function Cupones({setRefreash, refreash, setCuponesSorteo, cupone
   const { alert, setAlert } = useContext(AdminContext);
 
   const [cantidad, setCantidad] = useState("");
+
+  
 
   //Crear states
   const [cuponesBase, setCuponesBase] = useState([]);
@@ -104,6 +109,8 @@ export default function Cupones({setRefreash, refreash, setCuponesSorteo, cupone
               <TableCell align="center">Nombre del cliente</TableCell>
               <TableCell align="center">Boletos</TableCell>
               <TableCell align="center">Estado</TableCell>
+              <TableCell align="center">Creado el</TableCell>
+              <TableCell align="center">Canjeado el</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -116,8 +123,10 @@ export default function Cupones({setRefreash, refreash, setCuponesSorteo, cupone
     </div>
   );
 }
+//format dddd Do MMMM YYYY
 
 const RowsTableCupon = ({cupon, index}) => {
+  
   return (
     <TableRow
       key={index}
@@ -131,6 +140,12 @@ const RowsTableCupon = ({cupon, index}) => {
         <BoletosRow cupon={cupon} />
       </TableCell>
       <TableCell align="center">{cupon.canjeado ? "Canjeado" : "No canjeado"}</TableCell>
+      <TableCell align="center">
+        {cupon.fecha_creado ? moment(cupon.fecha_creado).locale('es-mx').format("dddd Do MMMM YYYY") : '' }
+      </TableCell>
+      <TableCell align="center">
+        {cupon.fecha_pago ? moment(cupon.fecha_pago,"YYYYMMDD").locale('es-mx').format("dddd Do MMMM YYYY") : '' }
+      </TableCell>
     </TableRow>
   );
 };
