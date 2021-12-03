@@ -79,6 +79,7 @@ export default function GenerarSorteo({loading, setLoading, setRefreash, refreas
         if (dataImagen.imagen) {
           formData.append("imagen", dataImagen.imagen);
         }
+        console.log();
         setLoading(true);
         await clienteAxios
         .post(`/sorteo/crearSorteo/`, formData, 
@@ -96,8 +97,8 @@ export default function GenerarSorteo({loading, setLoading, setRefreash, refreas
           handleDrawerOpen();
         })
         .catch((err) => {
-          console.log(err)
-          setLoading(!loading);
+          console.log(err.response);
+          setLoading(false);
           setSorteoFinal([]);
           setAlert({ message: 'Ocurrio un problema en el servidor', status: 'error', open: true });
           handleDrawerOpen();

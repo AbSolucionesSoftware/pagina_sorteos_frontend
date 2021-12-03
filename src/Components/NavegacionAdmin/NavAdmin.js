@@ -157,6 +157,18 @@ function NavegacionAdministrador(props) {
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
+          <ListItemButton
+            component={Link}
+            to={`/admin/cupones`}
+            selected={titulo === "Sorteos eliminados"}
+          >
+            <ListItemIcon>
+              <DeleteForeverIcon />
+            </ListItemIcon>
+            <Typography>Generar Cupones</Typography>
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
           <ListItemButton component={Link} to={`/`}>
             <ListItemIcon>
               <Home />

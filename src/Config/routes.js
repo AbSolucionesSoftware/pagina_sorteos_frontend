@@ -12,7 +12,9 @@ import BannerAdmin from "../Pages/Admin/Publicidad/BannerAdmin";
 import InoformacionEmpresa from "../Pages/Admin/Informacion/InoformacionEmpresa";
 import PreguntasFrecuentes from "../Pages/Admin/PreguntasFrecuentes/PreguntasFrecuentes";
 import VideosPromocionales from "../Pages/Admin/ListaVideos.js/VideosPromocionales";
-import SorteosEliminados from '../Pages/Admin/Sorteos/SorteosEliminados/SorteosEliminados'
+import SorteosEliminados from '../Pages/Admin/Sorteos/SorteosEliminados/SorteosEliminados';
+import Cupones from '../Pages/Admin/Cupones/Cupones';
+
 import Error404 from "../Pages/FrontUsers/Error";
 
 
@@ -51,6 +53,11 @@ const routes = [
 				path: '/admin/sorteos-eliminados',
 				component: SorteosEliminados,
 				exact: true,
+			},
+			{
+				path: '/admin/cupones',
+				component: Cupones,
+				exact: true
 			},
 			{
 				component: Error404

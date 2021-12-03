@@ -18,6 +18,7 @@ import { useDropzone } from "react-dropzone";
 import EditarSorteo from "./EditarSorteo";
 import CardPremio from './CardPremio';
 import Divider from '@mui/material/Divider';
+import Cupones from "../Cupones/Cupones";
 
 const useStyles = makeStyles((theme) => ({
   imagen: {
@@ -63,6 +64,7 @@ export default function SorteoAdministrador() {
   const [sorteo, setSorteo] = useState([]);
   const [preview, setPreview] = useState("");
   const [dataImagen, setDataImagen] = useState([]);
+  const [cuponesSorteo, setCuponesSorteo] = useState([]);
 
   const traerSorteoActivo = async () => {
     await clienteAxios
@@ -70,6 +72,8 @@ export default function SorteoAdministrador() {
       .then((res) => {
         setLoading(false);
         setSorteo(res.data.sorteo);
+        setCuponesSorteo(res.data.cupones);
+        console.log(res.data.sorteo);
       })
       .catch((err) => {
         setLoading(false);
@@ -266,6 +270,10 @@ export default function SorteoAdministrador() {
                     
                   </Box>
               </div>
+              <Box p={4}>
+                <Divider>Cupones</Divider>
+              </Box>
+              <Cupones setRefreash={setRefreash} refreash={refreash} sorteo={sorteo} setCuponesSorteo={setCuponesSorteo} cuponesSorteo={cuponesSorteo} />
             </Box>
           </Box>
         </Grid>
