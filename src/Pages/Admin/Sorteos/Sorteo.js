@@ -19,6 +19,7 @@ import EditarSorteo from "./EditarSorteo";
 import CardPremio from './CardPremio';
 import Divider from '@mui/material/Divider';
 import Cupones from "../Cupones/Cupones";
+import Sorteo404 from "./Sorteo404";
 
 const useStyles = makeStyles((theme) => ({
   imagen: {
@@ -156,7 +157,10 @@ export default function SorteoAdministrador() {
                 </Box>
               ) : null}
             </Box>
-            <Box p={1}>
+            {!sorteo ? (
+              <Sorteo404 />
+            ) : (
+<Box p={1}>
               <div className={classes.formInputFlex}>
                 <Box
                   className={classes.dropZone}
@@ -274,6 +278,8 @@ export default function SorteoAdministrador() {
               </Box>
               <Cupones setRefreash={setRefreash} refreash={refreash} sorteo={sorteo} setCuponesSorteo={setCuponesSorteo} cuponesSorteo={cuponesSorteo} />
             </Box>
+            )
+          }
           </Box>
         </Grid>
       </Grid>
