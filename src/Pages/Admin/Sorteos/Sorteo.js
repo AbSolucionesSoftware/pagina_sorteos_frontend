@@ -73,7 +73,6 @@ export default function SorteoAdministrador() {
         setLoading(false);
         setSorteo(res.data.sorteo);
         setCuponesSorteo(res.data.cupones);
-        console.log(res.data.sorteo);
       })
       .catch((err) => {
         setLoading(false);

@@ -156,7 +156,7 @@ function NavegacionAdministrador(props) {
             <Typography>Sorteos eliminados</Typography>
           </ListItemButton>
         </ListItem>
-        <ListItem disablePadding>
+        {/* <ListItem disablePadding>
           <ListItemButton
             component={Link}
             to={`/admin/cupones`}
@@ -167,7 +167,7 @@ function NavegacionAdministrador(props) {
             </ListItemIcon>
             <Typography>Generar Cupones</Typography>
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
         <ListItem disablePadding>
           <ListItemButton component={Link} to={`/`}>
             <ListItemIcon>
