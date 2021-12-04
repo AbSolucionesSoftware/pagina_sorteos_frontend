@@ -26,7 +26,7 @@ export default function Cupon_pay({datosBoleto, order, setAlert, handleClose}) {
                     status: "error",
                 });
             }else{
-                await clienteAxios.post(
+                const folio = await clienteAxios.post(
                     `/pago/cupon/${cuponValue}`,
                     {
                         cliente: datosBoleto,
@@ -44,7 +44,7 @@ export default function Cupon_pay({datosBoleto, order, setAlert, handleClose}) {
                 setOpen(true);
                     setDataPago({
                       status: "success",
-                      data: { boletos_seleccionados, datosBoleto },
+                      data: { boletos_seleccionados, datosBoleto, folio: folio.data.folio },
                     });
                 
             }

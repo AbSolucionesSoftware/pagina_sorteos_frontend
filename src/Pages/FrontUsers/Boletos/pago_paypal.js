@@ -75,7 +75,7 @@ export default function PagoPaypal({
             setOpen(true);
             setDataPago({
               status: "success",
-              data: { boletos_seleccionados, datosBoleto },
+              data: { boletos_seleccionados, datosBoleto, folio: res.data.folio  },
             });
           })
           .catch((err) => {

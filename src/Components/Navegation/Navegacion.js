@@ -100,14 +100,14 @@ export default function Navegacion() {
           </Button>
         ) : null}
 
-        {/* <Button
+        <Button
           color="inherit"
           sx={{ textTransform: "none", fontSize: 17, mx: 1 }}
           component={Link}
           to={`/sorteos/verificador`}
         >
           Verificar Boleto
-        </Button> */}
+        </Button>
         {datosSorteo ? (
           <Button
             color="inherit"
